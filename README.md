@@ -55,7 +55,7 @@ install.packages("packrat")
 packrat::restore()
 ```
 
--   Load the analysis results by running `output/Paper.Rmd`. The sensitivity analysis results can be reproduced by setting variables in this document, as explained at the top of the script.
+-   Load the analysis results by running `output/Paper.Rmd`. This complete analysis is not reproducible as the raw data cannot be published, however all interim results are stored in the repository and these can be explored. The sensitivity analysis results can be reproduced by setting variables in this document, as explained at the top of the script.
 
 ### Docker
 
