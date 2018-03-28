@@ -1,0 +1,26 @@
+---
+title: "Cover letter"
+output:
+    word_document: 
+        reference_docx: ../../common/style.docx
+    html_notebook: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+Dear Editor,
+
+Please find attached our manuscript, entitled "Exploring the effects of BCG vaccination in patients diagnosed with tuberculosis: observational study using the Enhanced Tuberculosis Surveillance system". 
+
+We feel our manuscript will be of interest to you and the journal's readership because Bacillus Calmette-Guérin (BCG) is one of the most widely-used vaccines worldwide and our study explores possible additional benefits from vaccination. We found evidence to suggest that vaccination with BCG is associated with reduced all-cause mortality for TB patients and weaker evidence of an association with a reduced chance of having a repeat episode. Recognition of such benefits could lead to a re-evaluation of BCG policy, both in low and high incidence countries. Our study benefits from the use of data from the Enhanced Tuberculosis surveillance system, which contains data on demographics, microbiology and outcomes of active TB cases in England. We made use of logistic regression, with both complete case analysis and multiply imputed data, to explore the effects of BCG vaccination in this robust dataset.
+
+This work was presented as a short oral abstract at the 48th Union world conference on lung health (2017). We do not have any issues relating to the journal policies. All authors have approved this version of the manuscript for submission and the content of the manuscript has not been published or submitted elsewhere.
+
+With kind regards, on behalf of all the co-authors,
+
+Sam Abbott
+
+

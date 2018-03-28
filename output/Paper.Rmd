@@ -1,0 +1,825 @@
+---
+title: '**Title:** Exploring the effects of BCG vaccination in patients diagnosed with tuberculosis: observational study using the Enhanced Tuberculosis Surveillance system'
+author: "Sam Abbott, Hannah Christensen, Maeve K Lalor, Dominik Zenner, Colin Campbell, Mary Ramsay, Ellen Brooks-Pollock"
+csl: ../common/bmj.csl
+output:
+  word_document:
+    fig_caption: yes
+    fig_height: 6
+    fig_width: 8
+    reference_docx: ../common/style.docx
+  html_document:
+    fig_caption: yes
+    fig_height: 6
+    fig_width: 8
+  pdf_document: default
+  html_notebook: null
+bibliography: ../common/library.bib
+---
+
+```{r setup, include=FALSE}
+require(knitr)
+```
+
+```{r fig_cap, echo=FALSE}
+#Load formatting functions
+source('../functions/format_functions.R')
+
+#set options for figure referencing
+options(figcap.prefix = "Figure", figcap.sep = ":", figcap.prefix.highlight = "**")
+
+#set options for table referencing
+options(tabcap.prefix = "Table", tabcap.sep = ":", tabcap.prefix.highlight = "**")
+
+##Supplementary Appendix: set options table referencing
+options(suptabcap.prefix = "Supplementary table", suptab.delin = 'S', suptabcap.sep = ":", suptabcap.prefix.highlight = "**")
+```
+
+```{r run variables, include=FALSE}
+##Create script of paper
+#purl('Paper.Rmd', quiet=TRUE)
+setwd('../output')
+#Edit to save file that results are saved in - warning data files need to be added or this will fail
+## main - main analysis (England only for data post 2008)
+## drop_recurrent - drop all those flag for appearing twice in the ETS (drop second mention)
+## restrict_UK_born - restricted to UK born only
+## restrict_non_UK_born - restricted to Non-UK born only 
+## elg_school_scheme - restricted to UK born that were eliblge for schools scheme cut is at 15 assuming elb closed in 2005
+## Note restricting by UK birth status will mean that the paper cannot be knit and instead needs to be run as a script
+
+folder <- 'main'
+direct_data <- '~/data/tb_data/ETS/ExploreBCGOnOutcome/'
+
+## should imputation be run as a sensitivity analysis?
+## Turn off imputation for all analysis except for main
+imput <- TRUE
+
+##Create directories if they do not exist
+ifelse(!dir.exists(paste0('../data/', folder)), dir.create(paste0('../data/', folder)), FALSE)
+ifelse(!dir.exists(paste0(direct_data, folder)), dir.create(paste0(direct_data, folder)), FALSE)
+```
+
+```{r load packages, include=FALSE}
+# Packages to load --------------------------------------------------------
+source('../scripts/packages.R')
+```
+
+```{r load data, message=FALSE, warning=FALSE, include=FALSE}
+# Load Cleaned data -------------------------------------------------------
+
+#Load Cleaned data used by other analysis
+## See https://www.samabbott.co.uk/tbinenglanddataclean/ for details of raw data cleaning and processing.
+
+#Convert to tibble object
+uk_not <- readRDS('~/data/tb_data/tbinenglanddataclean/clean_ets_2016.rds')
+
+# sample from data for testing of imputation: needs to be commented out to run actual analysis
+##uk_not<- uk_not[sample(nrow(uk_not), 40000), ]
+
+## Change variable names in line with analysis (due to updated data)
+uk_not <- uk_not %>% 
+              dplyr::rename(yrsinceBCG = YrSinceBCG, Mortality = mortality, SuccTreat = succTreat, AgeatBCG = age_bcg) %>% 
+                dplyr::mutate(TB_mortality = DeathDueTB)
+
+
+
+#Restriction based on country of notification - to England
+uk_not <- uk_not %>% dplyr::filter(country %in% c('England'))
+
+## Restrict data to post the introduction of national BCG status
+uk_not <- uk_not %>% filter(year > 2008)
+
+## Define nested population for imputation
+uk_not_nonested <- uk_not
+
+## Define eligibility for the schools scheme
+## Those that are UK born
+## Assume everyone who should have been vaccinated in the scheme were vaccinated at the latest when they were 15
+## Assume the scheme ran until 2005 (but not in 2005)
+## Assume that only the UK born were eligible for the scheme
+restrict_elg_school_scheme = function(df)
+{
+ df_elg <-  map(unique(df$year), function(x) {
+    if (x > 2004)
+    {
+     df_elg <- df %>% 
+                 dplyr::filter(year ==  x,age >= 14 + x - 2004) %>% 
+                     filter(ukborn == 'UK Born')
+    }else {
+      df_elf <- df
+    }
+   return(df_elg)
+  }) %>% bind_rows
+ 
+ return(df_elg)
+}
+
+## Restiction function for data
+  restrict_df = function(df, folder)
+  {
+    # Drop recurrent
+    if (folder == 'drop_recurrent') {
+          df_t <- df %>% dplyr::filter(is.na(recurrent))
+    }else if (folder == 'restrict_UK_born') {
+      #Restriction to UK born
+      df_t <- df %>% dplyr::filter(ukborn %in% 'UK Born')
+    }else if (folder == 'restrict_non_UK_born') {
+      #Restiction to Non-uk-born and redefining cob with lower degrees of freedom
+      df_t <- df %>% dplyr::filter(ukborn %in% 'Non-UK Born')
+    }else if (folder == 'elg_school_scheme') {
+      df_t <- df %>% restrict_elg_school_scheme
+    }else {
+        df_t <- df
+      }
+    return(df_t)
+  }
+
+## Restrict data based on sensitivty
+uk_not <- restrict_df(uk_not, folder)
+
+## Evaluation of population stats
+elg_school_stats <- function(df)
+{
+  ## Year of vaccination prior to the schools scheme ending
+  df %>% dplyr::filter(bcgvaccyr > 2004) %>% nrow -> vac_after_schools
+  df %>% dplyr::filter(bcgvaccyr < 2005) %>% nrow -> vac_during_schools
+  df %>% dplyr::filter(is.na(bcgvaccyr)) %>% nrow -> vac_yr_miss
+  
+  ##Age for elibigily to schools scheme
+  df %>% restrict_elg_school_scheme %>%  nrow -> eli_cases
+
+  df %>% dplyr::filter(ukborn == 'UK Born') %>% nrow -> uk_cases
+  
+  ##output
+  output <- c(vac_after_schools, vac_during_schools, vac_yr_miss, eli_cases, uk_cases)
+  names(output) <- c('vaccinated after school', 'vaccinated during school', 'year of vaccination missing', 'cases eligible for the schools scheme', 'uk born cases') 
+  
+  return(output)
+}
+
+elg_school_stats_sum <- uk_not %>% elg_school_stats
+```
+
+```{r analysis variables, include=FALSE}
+# Define Analysis Variables -----------------------------------------------
+stew(file = paste0('../data/', folder, '/exposure_outcome_defs.rda'),{
+  #Define outcomes to analysis - all outcomes selected are binary
+outcomes <-  c('Mortality', 'TB_mortality', 'prevdiag','pulmextrapulm', 'sputsmear')
+
+#Define Variables to analysis- BCG status is binary and Years since BCG is continous
+variables <- c('bcgvacc', 'yrsinceBCG', 'ageatvac')
+
+#Define Covariates
+covariates <- c('age', 'sex', 'natquintile', 'ukborn', 'ethgrp', 'year')
+
+#Define variables to fit to splines
+splines <- ('age')
+
+#Define outcome in words
+outcomes_words <- c('All-cause mortality', 'Death due to TB (in those who died*)', 'Recurrent TB', 'Pulmonary TB', 'Sputum smear status - positive')
+names(outcomes_words) <- outcomes
+
+#Define Variables in words
+variables_words <- c('BCG vaccination', 'Years since BCG vaccine', 'Age at vaccination')
+names(variables_words) <- variables
+
+#Define Covariates in words
+covariates_words <- c('Age', 'Sex', 'IMD rank (with 1 as most deprived and 5 as least deprived)', 'UK born', 'Ethnic group', 'Calendar year')
+names(covariates_words) <- covariates
+
+#Define splines in words
+splines_words <- c('age')
+names(splines_words) <- splines
+})
+
+## Sensitivity analysis
+if (folder %in% c('restrict_UK_born', 'restrict_non_UK_born', 'elg_school_scheme')) {
+    source('../sensitivity/params_UK_born.R')
+}
+
+## TB death footer
+tb_death_footer <- "Death due to TB in those who died and where cause of death was known"
+```
+
+```{r load functions, message=FALSE, warning=FALSE, include=FALSE}
+# Load functions required for the analysis --------------------------------
+source('../functions/main_functions.R')
+source('../functions/analysis_functions.R')
+source('../functions/summary_functions.R')
+source('../functions/plot_functions.R')
+source('../functions/demographic_functions.R')
+```
+
+```{r main analysis, message=FALSE, warning=FALSE, include=FALSE}
+#Run the regression analysis - saved in script
+source('../scripts/regression_analysis.R')
+```
+
+```{r Multiple imputation data, message=FALSE, echo=FALSE, results='asis', warning=FALSE}
+## define variables to impute
+imputed_var <- c(outcomes, covariates, variables, 'phec')
+#Run imputation script - analysis for imputed dataset
+if (imput) {
+  source('../scripts/imp_data.R')
+}
+``` 
+
+```{r explore-imp-missing-year-vac, echo = FALSE, eval = FALSE}
+if (imput) {
+     source('../sensitivity/explore_imputation_yrsinceBCG.R') 
+}
+```
+
+```{r Multiple imputation analysis, message=FALSE, echo=FALSE, results='asis', warning=FALSE}
+#Run imputation script - analysis for imputed dataset
+if (imput) {
+    source('../sensitivity/analysis_imp.R')
+}
+``` 
+
+```{r Predict the number of cases prevented, message = FALSE, echo = FALSE, warning = FALSE}
+if (folder %in% "main") {
+#Run script to determine predicted impact of vaccination
+source('../sensitivity/NoCasesPrevented.R')
+}
+```
+
+**Authors:**
+
+Sam Abbott, Bristol Medical School: Population Health Sciences, University of Bristol, Bristol, UK
+
+Hannah Christensen, Bristol Medical School: Population Health Sciences, University of Bristol, Bristol, UK
+
+Maeve K Lalor, TB section, National Infection Service, Public Health England, London, UK
+
+Dominik Zenner, Respiratory Diseases Department, Centre for Infectious Disease Surveillance and Control (CIDSC), National Infections Service, Public Health England, London, UK
+
+Colin Campbell, National Infection Service, Public Health England, London, UK
+
+Mary E Ramsay, Immunisation, Hepatitis and Blood safety department, Public Health England, London, UK
+
+Ellen Brooks-Pollock, Bristol Medical School: Population Health Sciences, University of Bristol, Bristol, UK
+
+**Correspondence to:** Sam Abbott, Bristol Medical School: Population Health Sciences, University of Bristol, Bristol BS8 2BN, UK; sam.abbott@bristol.ac.uk; 01173310185
+
+**WORD COUNT:** **Title** 19 (20), **Abstract** 220 (250), **Paper** 2740 (3500)  
+
+##### PAGEBREAK
+
+**ABSTRACT**
+
+**Background**
+
+Bacillus Calmette–Guérin (BCG) is one of the most widely-used vaccines worldwide. BCG primarily reduces the progression from infection to disease, however there is evidence that BCG may provide additional benefits. We aimed to investigate whether there is evidence in routinely-collected surveillance data that BCG vaccination impacts outcomes for tuberculosis (TB) cases in England.
+
+**Methods**
+
+We obtained all TB notifications for 2009-2015 in England from the Enhanced Tuberculosis surveillance system. We considered five outcomes: All-cause mortality, death due to TB (in those who died), recurrent TB, pulmonary disease, and sputum smear status. We used logistic regression, with complete case analysis, to investigate each outcome with BCG vaccination, years since vaccination and age at vaccination, adjusting for potential confounders. All analyses were repeated using multiply imputed data.
+
+**Results** 
+
+We found evidence of an association between BCG vaccination and reduced all-cause mortality (aOR:`r table_var_outs[[1]][2,5][[1]] %>% pretty_OR(CINote = "95%CI ")`, P:`r table_var_outs[[1]][1,6][[1]]`) and weak evidence of an association with reduced recurrent TB (aOR:`r table_var_outs[[1]][6,5][[1]] %>% pretty_OR(CINote = "95%CI ")`, P:`r table_var_outs[[1]][5,6][[1]]`). Analyses using multiple imputation suggested that the benefits of vaccination for all-cause mortality were reduced after 10 years.
+
+**Conclusions** 
+
+We found that BCG vaccination was associated with reduced all-cause mortality in people with TB although this benefit was less pronounced more than 10 years after vaccination. There was weak evidence of an association with reduced recurrent TB. 
+
+**Keywords:** Tuberculosis, BCG, Surveillance
+
+
+**What is the key question?**
+
+Is there evidence in the Enhanced Tuberculosis (TB) Surveillance System that BCG vaccination improves TB outcomes?
+
+
+**What is the bottom line?**
+
+This analysis suggests that vaccination with BCG is associated with reduced all-cause mortality for TB patients and potentially a reduced chance of having a repeat episode.
+
+**Why read on?**
+
+BCG vaccination could reduce all-cause mortality in TB cases and may decrease the number of repeat episodes in low incidence countries.
+
+##### PAGEBREAK
+
+**INTRODUCTION**
+
+Bacillus Calmette–Guérin (BCG) is one of the mostly widely-used vaccines and the only vaccine that protects against tuberculosis (TB) disease. BCG was first used in humans in 1921 and was introduced into the WHO Expanded Program on Immunization in 1974.[@The2004] BCG vaccination has been controversial due to its variable efficacy and possibility of causing a false positive result with the standard skin test for TB.[@Zwerling2011a] However, the lack of a more effective vaccine and the emergence of drug-resistant TB strains means that BCG remains the best available vaccination for TB.
+
+BCG’s primary mode of action is to directly prevent the development of active, symptomatic disease. Its efficacy in adults is context specific, with estimates ranging between 0% and 78%.[@Mangtani2014a] Efficacy has been shown to be dependent on previous exposure, with unexposed individuals receiving the greatest benefit. Unlike in adults, BCG has consistently been shown to be highly protective against TB and TB meningitis in children.[@Rodrigues1993; @Colditz1994] For this reason the majority of countries that use BCG vaccinate at birth.[@Zwerling2011] Adult vaccination is no longer common, in the UK where universal BCG vaccination of adolescents was stopped in 2005 in favour of a targeted neonatal programme aimed at high risk children.
+
+Vaccination policy has been primarily based on reducing the incidence of active TB and little attention has been given to any additional effects of BCG.[@Fine2005a; @Teo2006] There is some evidence that BCG vaccination induces innate immune responses which may provide non-specific protection,[@Kleinnijenhuis2012] TB patients with BCG scars were found to respond better to treatment with earlier sputum smear conversion,[@Jeremiah2010] and there is evidence to suggest that BCG vaccination is associated with reduced all-cause neonatal mortality[@Higgins] and both reduced TB[@Abubakar2013] and all-cause[@Rieckmann2016] mortality in the general population. Given that the immunology behind TB immunity is not well understood these findings suggest that BCG may play a more important role in improving TB outcomes than previously thought. We aimed to quantify the effects of BCG vaccination on outcomes for individuals with notified TB in England using routinely collected surveillance data to provide evidence for appropriate public health action and provision. Where we found an association, we additionally explored the role of years since vaccination, and age at vaccination. 
+
+#####PAGEBREAK
+
+**METHOD**
+
+**Enhanced Tuberculosis Surveillance (ETS) system**
+
+We extracted all notifications from the Enhanced Tuberculosis Surveillance (ETS) system from January 1, 2009 to December 31, 2015. BCG vaccination status and year of vaccination have been collected since 2008. We considered five TB outcomes which were selected due to their association with increased case infectiousness or poor consequences for patients (`r tabRef('OutcomeDef')`).
+
+```{r outcome-defs, warning = FALSE, message = FALSE, echo = FALSE}
+OutcomeDefsTab <- data_frame(Outcome = c(
+                                         'All-cause mortality',
+                                         'Death due to TB (in those who died)',
+                                         'Recurrent TB',
+                                         'Pulmonary disease', 
+                                         'Sputum smear status - positive'
+                                         ),
+                             Definition = c('All-cause mortality was defined using the overall outcome recorded in ETS, this is based on follow up at 12, 24, and 36 months (or until treatment completion). If a case dies within 12 months of completing treatment, from TB or from a cause related to TB then their overall outcome will be updated in the ETS. Those that were lost to follow up, or not evaluated were treated as missing.',
+                                            'For cases with a known cause of death, death due to TB is defined as those that died from TB, or where TB had contributed to their death.',
+                                           'TB cases who had recurrent episodes were identified in the dataset.',
+                                            'Cases that present with pulmonary TB (regardless of extra-pulmonary TB status).',
+                                            'Status of sputum sample tested for Acid-Fast Bacilli.'))
+
+OutcomeDefsTab %>% 
+  kable(align = 'll', caption = tabRef('OutcomeDef', 'Summary of outcome definitions and rationale for inclusion '))
+```
+
+**Exposure variables relating to BCG**
+
+We included three exposure variables related to BCG: BCG status (vaccinated, yes/no), years since vaccination and age at vaccination. 
+
+
+BCG status was taken directly from the ETS. Years since BCG vaccination was defined as year of notification minus year of vaccination and categorised into two groups (0 to 10 and 11+ years), based on evidence that the average duration of BCG protection is 10-15 years.[@Abubakar2013] Age at vaccination is defined in the online supplementary information.
+
+```{r plots of original var dist, warning = FALSE, echo = FALSE, message = FALSE, eval = FALSE}
+## Plot of years since BCG vaccination distribution
+ggplot(uk_not %>% filter(!is.na(ukborn), !is.na(yrsinceBCG)), aes(x = yr_bcg, group = ukborn, colour = ukborn, fill = ukborn)) +
+  geom_bar() + 
+    facet_grid(ukborn ~ yrsinceBCG, scales = 'free')
+
+## Plot of age at vaccination
+ggplot(uk_not %>% filter(!is.na(ukborn), !is.na(ageatvac)), aes(x = AgeatBCG, group = ukborn, colour = ukborn, fill = ukborn)) +
+  geom_bar() + 
+    facet_grid(ukborn ~ ageatvac, scales = 'free')
+```
+
+**Statistical Analysis**
+
+R was used for all statistical analysis.@R The analysis was conducted in two stages. Firstly, we calculated proportions for all demographic and outcome variables, and compared vaccinated and unvaccinated TB cases using the $\chi ^2$ test. Secondly, we used logistic regression, with complete case analysis, to estimate the association between exposures and outcome variables, both with and without adjustment for confounders. 
+
+In the multivariable models, we adjusted for sex,[@Parslow2001; @Roth2006a; @Aaby2014] age,[@Teale1993] Index of Multiple Deprivation (2010) categorised into five groups for England (IMD rank),[@DCLG2011; @Bhatti1995] ethnicity,[@Parslow2001; @Abubakar2008] UK birth status,[@French2007; @Djuretic2002] and year of notification. As the relationship between age and outcomes was non-linear, we modelled age using a natural cubic spline with knots at the 25%, 50% and 75% quantiles.
+
+
+We conducted sensitivity analyses to assess the robustness of the results, by dropping each confounding variable in turn and assessing the effect on the adjusted Odds Ratios (aORs) of the exposure variable. We repeated the analysis excluding duplicate recurrent cases, and restricting the study population to those eligible for the BCG schools scheme (defined as UK born cases that were aged 14 or over in 2004) to assess the comparability of the BCG vaccinated and unvaccinated populations. To mitigate the impact of missing data we used multiple imputation, with the MICE package.[@VanBuuren2011] We imputed 50 data sets (for 20 iterations) using all variables included in the analysis as predictors along with Public Health England centre. The model results were pooled using the small sample method,[@Barnard1999] and effect sizes compared with those from the main analysis.
+
+**RESULTS**
+
+**Description of the data**
+
+There were `r format(nrow(uk_not),big.mark=",",scientific=FALSE)` TB notifications between 2009-2015 in England. Reporting of vaccination status and year of vaccination improved over time: `r round(sum(!is.na(uk_not[uk_not$year %in% as.character(2009:2012),'bcgvacc']))/nrow(uk_not[uk_not$year %in% as.character(2009:2012),])*100, digits=1)`% (`r sum(!is.na(uk_not[uk_not$year %in% as.character(2009:2012),'bcgvacc']))`/`r nrow(uk_not[uk_not$year %in% as.character(2009:2012),])`) of notifications included vaccination status for 2009 to 2012, increasing to `r round(sum(!is.na(uk_not[uk_not$year %in% as.character(2013:2015),'bcgvacc']))/nrow(uk_not[uk_not$year %in% as.character(2013:2015),])*100, digits=1)`% (`r sum(!is.na(uk_not[uk_not$year %in% as.character(2013:2015),'bcgvacc']))`/`r nrow(uk_not[uk_not$year %in% as.character(2013:2015),])`) from 2013 to 2015. The majority of cases that had a known vaccination status were vaccinated (`r round(length(uk_not$bcgvacc[(uk_not$bcgvacc %in% 'Yes' & !is.na(uk_not$bcgvacc))])/sum(!is.na(uk_not$bcgvacc))*100, digits=1)`%, `r length(uk_not$bcgvacc[(uk_not$bcgvacc %in% 'Yes' & !is.na(uk_not$bcgvacc))])`/`r sum(!is.na(uk_not$bcgvacc))`), and where age and year of vaccination was known, the majority of cases were vaccinated at birth (`r round(summary(uk_not$ageatvac)[1]/sum(!is.na(uk_not$ageatvac)), digits =1)*100`%, `r summary(uk_not$ageatvac)[1]`/`r sum(!is.na(uk_not$ageatvac))`).
+
+```{r demographics breakdown, message=FALSE, warning=FALSE, echo=FALSE}
+#Descriptive data analysis - saved in script
+if (!(folder %in% c('restrict_UK_born', 'restrict_non_UK_born', 'elg_school_scheme'))) {
+  source('../scripts/data_descript.R')
+} 
+```
+
+Vaccinated cases were younger than unvaccinated cases on average (median age `r age_bcg_yes[2]` years (IQR `r age_bcg_yes[1]` to `r age_bcg_yes[3]`) compared to `r age_bcg_no[2]` years (IQR `r age_bcg_no[1]` to `r age_bcg_no[3]`)). A higher proportion of non-UK born cases were BCG vaccinated, (`r ukborn_prop_BCG[1,4] `%, `r ukborn_prop_BCG[1,2]`/`r ukborn_prop_BCG[1,6]`) compared to UK born cases (`r ukborn_prop_BCG[2,4] `%, `r ukborn_prop_BCG[2,2]`/`r ukborn_prop_BCG[2,6]`, P: `r ukborn_prop_BCG[2,9]`) and, of those vaccinated, a higher proportion of non-UK born cases were vaccinated at birth compared to UK born cases (`r ukborn_prop_vcbirth[2]` vs. `r ukborn_prop_vcbirth[1]` respectively, P: `r ukborn_test_vcbirth`). See online `r SuptabRef('outcomesum')` for the breakdown of outcome variables and `r SuptabRef('ConfounderStrat')` for the breakdown of confounding variables.
+
+
+```{r particpants summary, echo = FALSE, message = FALSE, warning = FALSE}
+bake(file = paste0('../data/', folder, '/participants.rds'), {
+  
+  ##  Filter data for only that were vaccinated (recorded as vaccinated)
+uk_not_vac <- uk_not %>%  filter(bcgvacc %in% 'Yes')
+out <- map2(variables, list(uk_not, uk_not_vac, uk_not_vac), function(variable, df){
+
+  out <- outcomes %>% map_df(function(outcome, var = variable, df_out = df ){
+    if (outcome %in% "TB_mortality") {
+      df_out <- df_out %>% filter(Mortality %in% 'Yes')
+    }
+  #Find number with variable and outcome - with adjustments
+uni <- sum(complete.cases(df_out[,c(outcome, var)]))
+adj <- sum(complete.cases(df_out[,c(outcome, var, covariates)]))
+
+#Present percentage missing from main data set
+uni <- paste(uni, ' (', pretty_round(uni/nrow(df_out)*100,digits = 0), '%)',sep = '')
+adj <- paste(adj, ' (', pretty_round(adj/nrow(df_out)*100,digits = 0), '%)',sep = '')
+
+out  <- data_frame(univariable = uni, Adjusted = adj)
+return(out)
+})
+  return(out)
+})
+
+participants_table <- bind_cols(data_frame(Outcome = outcomes_words), do.call(bind_cols, out))
+colnames(participants_table) <- c('Outcomes', 'BCG', 'BCGAdj', 'YearOfVac', 'YearOfVacAdj', 'AgeAtVac', 'AgeAtVacAdj')
+
+#Temp to assign variable for saving
+tmp <- participants_table 
+}) -> participants_table
+```
+
+```{r split out percentage odds, echo=FALSE, message=FALSE}
+stew(file = paste0('../data/', folder, '/OR_for_text.rda'), {
+
+pretty_OR_P <- function(OR, P) {
+   pretty_OR(OR) %>% 
+  str_replace("\\)", paste0(", P: ", P, ")"))
+}
+
+## OR Mortality
+OR.mort <- pretty_OR_P(table_var_outs[[1]][2,3][[1]], table_var_outs[[1]][1,4][[1]])
+
+
+
+## aOR difference Mortality
+aOR.mort <- pretty_OR_P(table_var_outs[[1]][2,5][[1]], table_var_outs[[1]][1,6][[1]])
+
+## Get OR for estimating impact of everyone being vaccinated
+aOR.mort.split <- strsplit(table_var_outs[[1]][2,5][[1]], "") %>% unlist
+
+aOR.prog <- list(OR = aOR.mort.split[1:4], 
+                 LCI = aOR.mort.split[7:10], 
+                 UCI = aOR.mort.split[15:18]) %>% 
+  map(~paste(., collapse = "")) %>% 
+  map_dfc(~as.numeric(.)) %>% 
+  mutate(outcome = "Mortality")
+
+## aOR recurrent TB
+aOR.prev <- pretty_OR_P(table_var_outs[[1]][6,5][[1]], table_var_outs[[1]][5,6][[1]])
+
+})
+
+```
+
+```{r link to predicted avg impact per year, message = FALSE, warning = FALSE, echo = FALSE}
+if (folder %in% "main") {
+  AllMortPred <- AvgYearlyPredictImpact %>% 
+                filter(outcome %in% 'Mortality') %>%
+                 pull(pretty_eff_year)
+}
+```
+
+
+**All-cause mortality**
+
+In the univariable analysis the odds of death from any cause were lower for BCG vaccinated TB cases compared to unvaccinated cases, with an OR of `r OR.mort` (`r tabRef('BCGoutsum')`, see `r SuptabRef('bcg_mortality_tab')` for the full table); an association remained after adjusting for confounders, but was attenuated with an aOR of `r aOR.mort`.  We estimate that if all unvaccinated cases had been vaccinated there would have been on average `r AllMortPred ` fewer deaths per year during the study period (out of `r unvac_mort_per_year` deaths per year on average in unvaccinated cases). Whilst there was evidence in univariable analyses to suggest all-cause mortality was higher in persons vaccinated more than 10 years prior to notification of TB and that all-cause mortality increased with increasing age group, these disappeared after adjusting for potential confounders (`r tabRef('YrsinceBCGoutsum')`, `r SuptabRef('ageatvacoutsum')`). 
+
+Similar results to the multivariable analysis were found using multiply imputed data for the association between vaccination status and all-cause mortality (aOR: `r sum_imp_bcg[1, 5][[1]]  %>%  pretty_OR`, P:  `r sum_imp_bcg[1, 6][[1]]`), but not for time since vaccination with a greatly increased risk of all-cause mortality estimated for those vaccinated more than 10 years before case notification, compared to those vaccinated more recently (aOR: `r sum_imp_yrsinceBCG[1, 5][[1]] %>%  pretty_OR`, (see online `r SuptabRef('sum_imp_bcg')`, `r SuptabRef('sum_imp_yrsinceBCG')`)). For age at vaccination results for the multivariable analysis using multiply imputed data were comparable to those found using complete case analysis, except that there was some evidence that vaccination in adolescence, compared to under 1, was associated with increased, rather than decreased, all-cause mortality (aOR: `r sum_imp_ageatvac[2, 6][[1]] %>%  pretty_OR`, `r SuptabRef('sum_imp_ageatvac')`).
+
+**Deaths due to TB (in those who died)**
+
+There was little evidence of any association between BCG vaccination and deaths due to TB (in those who died and where cause of death was known) in the univariable analysis (`r tabRef('BCGoutsum')`). The adjusted point estimate indicated an association between BCG vaccination and reduced deaths due to TB (in those who died) although the confidence intervals remained wide with a similar result found using multiply imputed data (see online `r SuptabRef('sum_imp_bcg')`). There were insufficient data to robustly estimate an association between deaths due to TB (in those who died) and years since vaccination or age at vaccination (`r tabRef('YrsinceBCGoutsum')`, `r SuptabRef('ageatvacoutsum')`).
+
+**Recurrent TB**
+
+In both the univariable and multivariable analysis there was some evidence that BCG vaccination was associated with reduced recurrent TB, although the strength of the evidence was weakened after adjusting for confounders (`r tabRef('BCGoutsum')`). In the adjusted analysis, the odds of recurrent TB were lower for BCG vaccinated cases compared to unvaccinated cases, with an aOR of `r aOR.prev`. The strength of the evidence for this association was comparable in the analysis using multiply imputed data (see online `r SuptabRef('sum_imp_bcg')`). There was little evidence in the adjusted analysis of any association between recurrent TB and years since vaccination (`r tabRef('YrsinceBCGoutsum')`) or age at vaccination (`r SuptabRef('ageatvacoutsum')`).
+
+**Other Outcomes**
+
+After adjusting for confounders there was little evidence for any association between BCG vaccination and pulmonary disease or positive sputum smear status (`r tabRef('BCGoutsum')`); similar results were found using multiply imputed data (see online `r SuptabRef('sum_imp_bcg')`).
+
+```{r BCG vaccination summary table, message=FALSE, echo=FALSE, results='asis', warning=FALSE}
+table_var_outs[[1]]$Outcome <- stringr::str_replace(as.character(table_var_outs[[1]]$Outcome), "[*]", "\u2021")
+
+table_var_outs[[1]] %>% 
+  combine_model_data_sum(DataSum = ModelDataSum[[1]]) %>% 
+            pretty_sum_results_table(col_names = c('Outcome', 'BCG vaccinated', 'Cases*', 'Cases with outcome (%)', 'OR (95% CI)', 'P-value', 'Cases\u2020', 'Cases with outcome (%)', 'aOR (95% CI)', 'P-value'), 
+                                     footer = paste0('OR (95% CI): unadjusted odds ratio with 95% confidence intervals, aOR (95% CI): adjusted odds ratios with 95% confidence intervals, ', sum_sample_size('BCG', VarAdj = 'BCGAdj'), ", \u2021 ", tb_death_footer), 
+                                     label = 'BCGoutsum', 
+                                     caption = 'Summary of associations between BCG vaccination and all outcomes')
+```
+
+
+
+```{r Years since Vaccination summary table, message=FALSE, echo=FALSE, results='asis', warning=FALSE}
+## For deaths due to TB (in those who died) no data so set model outputs to null
+table_var_outs[[2]][4, c(3,5)] <- "*Insufficient data*"
+table_var_outs[[2]][3, c(4,6)] <- "-"
+
+table_var_outs[[2]]$Outcome <- stringr::str_replace(as.character(table_var_outs[[2]]$Outcome), "[*]", "\u2021")
+
+table_var_outs[[2]] %>% 
+  combine_model_data_sum(DataSum = ModelDataSum[[2]]) %>% 
+            pretty_sum_results_table(col_names = c('Outcome', 'Years since BCG', 'Cases*', 'Cases with outcome (%)', 'OR (95% CI)', 'P-value', 'Cases\u2020', 'Cases with outcome (%)', 'aOR (95% CI)', 'P-value'), 
+                                     footer = paste0('OR (95% CI): unadjusted odds ratio with 95% confidence intervals, aOR (95% CI): adjusted odds ratios with 95% confidence intervals, ', sum_sample_size('YearOfVac', VarAdj = 'YearOfVacAdj', PerDescrip = '% of vaccinated cases'),
+                                                     ", \u2021 ", tb_death_footer), 
+                                     label = 'YrsinceBCGoutsum', 
+                                     caption = 'Summary of associations between years since vaccination and all outcomes in individuals who were vaccinated. The baseline exposure is vaccination $\u2264 10$ years before diagnosis compared to vaccination $11+$ years before diagnosis. Deaths due to TB (in those who died) had insufficient data for effect sizes to be estimated in both the univariable and multivariable analysis.'
+                                     )
+``` 
+
+
+```{r Covariate test, message=FALSE, echo=FALSE, results='asis', warning=FALSE, eval = FALSE}
+#run analysis with each covaraite dropped - saved in script
+  source('../sensitivity/Covariate_test.R')
+``` 
+
+```{r table testing cov bcgvacc, include = FALSE, eval = FALSE}
+bcgvacc_cov_ef %>% kable
+```
+
+**Sensitivity analysis**
+
+Dropping duplicate recurrent TB notifications increased the magnitude, and precision, of the effect sizes for recurrent TB, all-cause mortality, and deaths due to TB (in those who died) (see online `r SuptabRef('BCGoutsumsens')`). Restricting the analysis to only cases that were eligible for the BCG schools scheme reduced the sample size of the analysis (from an initial study size of `r nrow(uk_not)`, of which `r uk_not %>% filter(ukborn %in% 'UK Born') %>% nrow` were UK born, to `r elg_school_stats_sum['cases eligible for the schools scheme'] %>% as.numeric` cases that would have been eligible for the BCG schools scheme). With this reduced sample size, there was strong evidence in adjusted analyses of an association between BCG vaccination and reduced recurrent TB, and evidence of an association with decreased all-cause mortality (see online `r SuptabRef('BCGoutsumsens')`).
+
+
+#####PAGEBREAK
+
+**DISCUSSION**
+
+```{r Summary stats for discussion, message = FALSE, echo = FALSE}
+MissDataBCG <- paste0(round(sum(is.na(uk_not[uk_not$year %in%  as.character(2009:2015),'bcgvacc']))/nrow(uk_not[uk_not$year %in%  as.character(2009:2015),])*100, digits  = 0),'%  (',sum(is.na(uk_not[uk_not$year %in%  as.character(2009:2015),'bcgvacc'])),'/', nrow(uk_not[uk_not$year %in%  as.character(2009:2015),]), ')')
+
+MissDataYearBCG <- paste0(round(sum(is.na(uk_not[(uk_not$year %in%  as.character(2009:2015) & uk_not$bcgvacc %in% 'Yes'),'ageatvac']))/nrow(uk_not[(uk_not$year %in% as.character(2009:2015) & uk_not$bcgvacc %in% 'Yes'),])*100, digits =  0), '%, (', sum(is.na(uk_not[(uk_not$year %in%  as.character(2009:2015) & uk_not$bcgvacc %in% 'Yes'),'ageatvac'])), '/', nrow(uk_not[(uk_not$year %in% c('2009', '2010', '2011', '2012', '2013', '2014') & uk_not$bcgvacc %in% 'Yes'),]), ')')
+```
+
+Using TB surveillance data collected in England we found that BCG vaccination, prior to the development of active TB, was associated with reduced all-cause mortality and fewer recurrent TB cases, although the evidence for this association was weaker. There was some suggestion that the association with all-cause mortality was due to reduced deaths due to TB (in those who died), though the study was underpowered to definitively assess this. We did not find evidence of an association between BCG status and positive smear status or pulmonary TB. Analysis with multiply imputed data indicated that notification 10+ years after vaccination was associated with increased all-cause mortality. In separate analyses, there was some evidence that vaccination at birth, compared to at any other age, was associated with reduced all-cause mortality, and increased deaths due to TB (in those who died).
+
+This study used a large detailed dataset, with coverage across demographic groups, and standardized data collection from notifications and laboratories. The use of routine surveillance data means that this study would be readily repeatable with new data. The surveillance data contained multiple known risk factors, this allowed us to adjust for the confounding present in the univariable analysis, which attenuated the evidence for an association with BCG vaccination for all outcomes. However, there are important limitations to consider. The study was conducted within a population of active TB cases, therefore the association with all-cause mortality cannot be extrapolated to the general population. Additionally, vaccinated and unvaccinated populations may not be directly comparable because vaccination has been targeted at high-risk neonates in the UK since 2005. We mitigated this potential source for bias by conducting a sensitivity analysis including only those eligible for the universal school age scheme, and whilst the strength of associations were attenuated there remained some evidence of improved outcomes. Sensitivity analysis excluding recurrent cases indicated their inclusion may have biased our results towards the null.
+
+Variable data completeness changed with time, with both BCG vaccination status and year of vaccination having a high percentage of missing data, which may not be missing completely at random. We therefore checked the robustness of our results with multiple imputation including regional variability, however an unknown missing not at random mechanism, or unmeasured confounding may still have introduced bias. We found a greatly increased risk of all-cause mortality for those vaccinated more than 10 years ago in the analysis with multiply imputed data, compared to the complete case analysis. This is likely to be driven by a missing not at random mechanism for years since vaccination, with older cases being both more likely to have been vaccinated more than 10 years previously and to also have an unknown year of vaccination.  The high percentage of missing data also means that we were likely to be underpowered to detect an effect of BCG vaccination on sputum smear status and deaths due to TB (in those who died), with years since vaccination, and age at vaccination likely to be underpowered for all outcomes. We were not able to adjust for either tuberculin skin test (TST) stringency, or the latitude effect, although we were able to adjust for UK birth status.[@Roy2014b] However, the bias induced by these confounders is likely to be towards the null, meaning that our effect estimates are likely to be conservative. Finally, BCG vaccination status may be subject to misclassification due to recall bias; validation studies of the recording of BCG status in the ETS would be required to assess this.
+ 
+Little work has been done to assess the overall effect of BCG on outcomes for active TB cases although the possible non-specific effects of BCG are an area of active research.[@Higgins; @Kandasamy2016; @Pollard2017] Whilst multiple studies have investigated BCG's association with all-cause mortality, it has been difficult to assess whether the association continues beyond the first year of life.[@Pollard2017] The effect size of the association we identified between BCG and all-cause mortality in active TB cases was comparable to that found in a Danish case-cohort study in the general population (aHR: 0.58 (95% CI 0.39 to 0.85).[@Rieckmann2016] A recent systematic review also found that BCG vaccination was associated with reduced all-cause mortality in neonates, with an average relative risk of 0.70 (95% CI 0.49 to 1.01) from five clinical trials and 0.47 (95% CI 0.32 to 0.69) from nine observational studies at high risk of bias.[@Higgins] We found some weak evidence that BCG vaccination was associated with reduced deaths due to TB (in those who died), although our point estimate had large confidence intervals. Several meta-analyses have found evidence supporting this association,[@Colditz1994; @Abubakar2013] with one meta-analysis estimating a 71% (RR: 0.29 95% CI 0.16 to 0.53) reduction in deaths due to TB.[@Colditz1994] Our study was limited by the relative rarity of deaths due to TB in England, whereas other approaches benefited from the use of meta-analysis. This study could not determine the possible causal pathway for the association between BCG vaccination all-cause mortality, and recurrent TB. These are important to establish in order to understand the effect of BCG vaccination on TB outcomes.
+
+We found that BCG vaccination was associated with reduced all-cause mortality, with some weaker evidence of an association with reduced recurrent TB. A plausible mechanism for this association is that BCG vaccination improves treatment outcomes,[@Jeremiah2010] which then results in decreased mortality, and reduced recurrent TB. However, these effects may also be independent and for all-cause mortality may not be directly related to active TB. In this case, a possible mechanism for the association between BCG vaccination and all-cause mortality is that BCG vaccination modulates the innate immune response, resulting in non-specific protection.[@Kleinnijenhuis2012] For low incidence countries, where the reduction in TB cases has been used as evidence to scale back vaccination programs,[@Zwerling2011] these results suggest that BCG vaccination may be more beneficial than previously thought. In countries that target vaccination at those considered to be at high risk of TB the results from this study could be used to help drive uptake by providing additional incentives for vaccination. The evidence we have presented should be considered in future cost-effectiveness studies of BCG vaccination programs.
+
+Further work is required to determine whether years since vaccination and age at vaccination are associated with TB outcomes as this study was limited by low sample size, missing data for year of vaccination, and the relative rarity of some TB outcomes. However, due to the continuous collection of the surveillance data used in this analysis, this study could be repeated once additional data have been collected. The results from this study require validation in independent datasets and the analysis should be reproducible in other low incidence countries that have similarly developed surveillance systems. If validated in low incidence countries, similar studies in medium to high incidence countries should be conducted because any effect would have a greater impact in these settings.
+
+**Acknowledgements**
+
+The authors thank the TB section at Public Health England (PHE) for maintaining the Enhanced Tuberculosis Surveillance (ETS) system; all the healthcare workers involved in data collection for the ETS.
+
+**Funding**
+
+SEA, HC, and EBP are funded by the National Institute for Health Research Health Protection Research Unit (NIHR HPRU) in Evaluation of Interventions at University of Bristol in partnership with Public Health England (PHE). The views expressed are those of the author(s) and not necessarily those of the NHS, the NIHR, the Department of Health or Public Health England.
+
+**Conflicts of interest**
+
+HC reports receiving honoraria from Sanofi Pasteur, and consultancy fees from AstraZeneca, GSK and IMS Health, all paid to her employer.
+
+**Accessibility of data and programming code**
+
+The code for the analysis contained in this paper can be found at: [https://github.com/seabbs/ExploreBCGOnOutcomes](https://github.com/seabbs/ExploreBCGOnOutcomes)
+
+##### PAGEBREAK
+
+**REFERENCES**
+
+<div id = 'refs'></div>
+
+##### PAGEBREAK
+
+## Online supplementary appendix: Exploring the effects of BCG vaccination in patients diagnosed with tuberculosis: observational study using the Enhanced Tuberculosis Surveillance system
+
+Sam Abbott, Hannah Christensen, Maeve K Lalor, Dominik Zennor, Colin Campbell, Mary Ramsay, Ellen Brooks-Pollock
+
+```{r participant summary table, echo=FALSE, message=FALSE, eval = FALSE}
+participants_table %>% 
+              pretty_sum_results_table(footer = paste0('(% of all cases for BCG vaccination, and % cases with known vaccination status for year of vaccination), * ', tb_death_footer), label = 'participant_table', caption = 'Summary of included notifications for each outcome and exposure variable, for both the univariable and multivariable data sets. Percentages in brackets summarise the percentage of the whole data set (2009-2015) that the selected participants represent. Year of vaccination summarises the data used for both age at vaccination and years of vaccination as both year and age at notification had no missing data, with the denominator being cases that had a recorded vaccination', cap_fun = SuptabRef)
+```
+
+**Outcome variables stratified by BCG vaccination status**
+
+```{r outcome summary, echo=FALSE, message=FALSE, warning=FALSE, results='asis'}
+bake(file  = paste0('../data/', folder, '/outcome_demo_tab_bcg.rds'), {
+#Compile summary table
+var <- c(outcomes)
+var_words <- c(outcomes_words)
+categories <- list(c('Yes', 'No', NA))
+names(categories[[1]]) <- c('Vaccinated', 'Unvaccinated', 'Unknown vaccine status')
+names(categories) <- 'bcgvacc'
+
+
+  outcome_sum <- bind_cols(demographic_summary(var, var_words, uk_not), variable_summary(categories, var, var_words, uk_not))
+}) -> outcome_sum
+
+## Pretty results table
+outcome_sum %>% 
+    pretty_sum_results_table(col_names = c("Outcome", colnames(outcome_sum)[-1]),
+                             footer = paste0('{% all cases}(% complete within vaccine status)[% *complete within category*], * ',  tb_death_footer), 
+                             label = 'outcomesum', 
+                             caption = 'Outcomes for individuals in England notified with tuberculosis between 2009-2015,  stratified by BCG vaccination status.', 
+                             format.args = (list(strip.white = FALSE)),
+                             cap_fun = SuptabRef)
+```
+
+**Confounding variables stratified by BCG vaccination status**
+
+```{r demographic summary, echo=FALSE, message=FALSE}
+bake(file = paste0('../data/', folder, '/demographic_tab_bcg.rds'), {
+  #Compile summary table
+var <- c(covariates)
+var_words <- c(covariates_words)
+categories <- list(c('Yes', 'No', NA))
+names(categories[[1]]) <- c('Vaccinated', 'Unvaccinated', 'Unknown vaccine status')
+names(categories) <- 'bcgvacc'
+
+demo_sum <- bind_cols(demographic_summary(var, var_words, uk_not), variable_summary(categories, var, var_words, uk_not))
+}) -> demo_sum_bcg
+
+demo_sum_bcg %>% 
+              pretty_sum_results_table(col_names = c("Confounder", colnames(demo_sum_bcg)[-1]),
+                                       footer = paste0('{% all cases}(% complete within vaccine status)[% *complete within category*], * ',  tb_death_footer), 
+                                       label = 'ConfounderStrat', 
+                                       caption = 'Confounders for individuals in England notified with tuberculosis between 2009-2015,  stratified by BCG vaccination status.',
+                                       cap_fun = SuptabRef)
+```
+
+##### PAGEBREAK
+
+**Model output: All-cause mortality**
+
+```{r bcg-mortality, message = FALSE, echo = FALSE, results = "asis"}
+bcg_mortality_tab <- table_var_out[['bcgvacc']] %>% transpose()
+bcg_mortality_tab  <- bcg_mortality_tab[["spline"]][[1]]
+
+bcg_mortality_tab  %>%
+  pretty_sum_results_table(col_names = c("Variable", "Total", "All-cause mortality", "OR (95% CI)", "P-value",
+                                         "aOR (95% CI)", "P-value"),
+                           footer = 'OR (95% CI): unadjusted odds ratio with 95% confidence intervals, aOR (95% CI): adjusted odds ratios with 95% confidence intervals', 
+                           label = 'bcg_mortality_tab',
+                           caption = 'Summary of logistic regression model output with BCG vaccination as the exposure and all-cause mortality as the outcome.',
+                                     cap_fun = SuptabRef
+)
+```
+
+##### PAGEBREAK
+
+**Secondary exposure: Age at vaccination**
+
+We calculated age at vaccination as year of vaccination minus year of birth. We categorized age at vaccination into $0$ to $< 1$, $1$ to $< 12$, $12$ to $< 16$ and 16+ years because the distribution was bi-model with modes at `r as.numeric(names(table(uk_not$AgeatBCG)[rev(order(table(uk_not$AgeatBCG)))]))[1]` and `r as.numeric(names(table(uk_not$AgeatBCG)[rev(order(table(uk_not$AgeatBCG)))]))[2]` years. This categorization captures the current UK policy of vaccination at birth, historic policy of vaccination at 13-15 years and catch up vaccination for high risk children.
+
+
+```{r Age at vaccination summary table, message=FALSE, echo=FALSE, results='asis'}
+table_var_outs[[3]]$Outcome <- stringr::str_replace(as.character(table_var_outs[[3]]$Outcome), "[*]", "\u2021")
+
+table_var_outs[[3]] %>% 
+  combine_model_data_sum(DataSum = ModelDataSum[[3]]) %>% 
+            pretty_sum_results_table(col_names = c('Outcome', 'Age at BCG', 'Cases*', 'Cases with outcome (%)', 'OR (95% CI)', 'P-value', 'Cases\u2020', 'Cases with outcome (%)', 'aOR (95% CI)', 'P-value'), 
+                                     footer = paste0('OR (95% CI): unadjusted odds ratio with 95% confidence intervals, aOR (95% CI): adjusted odds ratios with 95% confidence intervals, ', sum_sample_size('AgeAtVac', VarAdj = 'AgeAtVacAdj', PerDescrip = '% of vaccinated cases'),
+                                                     " \u2021 ",  tb_death_footer), 
+                                     label = 'ageatvacoutsum', 
+                                     caption = 'Summary of associations between age at vaccination and all outcomes in individuals who were vaccinated - the baseline exposure is vaccination at birth compared to vaccination from 1 to < 12, 12 to < 16, and 16+ years of age.',
+                                     cap_fun = SuptabRef
+                                     )
+
+```
+
+##### PAGEBREAK
+
+**Sensitivity analysis of the missing data using multiple imputation**
+
+We found that repeating the analysis with an imputed data set had some effect on the results from the complete case analysis. There was a decrease in the accuracy of effect size estimates for BCG vaccination, some increase in p-values (`r SuptabRef('sum_imp_bcg')`). However, none of the estimated effects changed their direction, and there were no detectable systematic changes in the results. 
+
+For the secondary exposure variables (years since vaccination and age at vaccination, (`r SuptabRef('sum_imp_yrsinceBCG')` and `r SuptabRef('sum_imp_ageatvac')`), we found a change in direction of the point estimate between years since vaccination and all-cause mortality and recurrent TB, but similar results for age at vaccination and outcomes.
+
+
+```{r Imp BCGvacc table, message=FALSE, echo=FALSE, results='asis', warning=FALSE}
+  #BCG vaccination
+if (imput) {
+  sum_imp_bcg %>% 
+              pretty_sum_results_table(footer = paste0('OR: odds ratio with 95% confidence intervals, aOR: adjusted odds ratio with 95% confidence intervals, fmi: fraction of missing information, * ', tb_death_footer), 
+                                       col_names =  c('Outcome', 'OR (95% CI)', 'P-value', 'fmi', 'aOR (95% CI)', 'P-value', 'fmi'),
+                                       label = 'sum_imp_bcg', 
+                                       caption = 'Summary of associations between BCG vaccination and all outcomes, using pooled imputed data.', 
+                                       cap_fun = SuptabRef)
+}
+```
+
+```{r Imp yrsinceBCG table, message=FALSE, echo=FALSE, results='asis', warning=FALSE}
+#BCG vaccination
+if (imput) {
+  
+## Remove spurious results for deaths due to TB (in those who died) (no events in the data set to estimate on)
+sum_imp_yrsinceBCG[2, c(2, 5)] <- '*Insufficient data*'
+
+sum_imp_yrsinceBCG %>% 
+              pretty_sum_results_table(footer = paste0('OR: odds ratio with 95% confidence intervals, aOR: adjusted odds ratio with 95% confidence intervals, fmi: fraction of missing information, * ', tb_death_footer),
+                                       col_names =  c('Outcome', 'OR (95% CI)', 'P-value', 'fmi', 'aOR (95% CI)', 'P-value', 'fmi'),
+                                       label = 'sum_imp_yrsinceBCG', 
+                                       caption = 'Summary of associations between years since vaccination and all outcomes, using pooled imputed data. There was insufficient data to estimate an effect for deaths due to TB (in those who died)', 
+                                       cap_fun = SuptabRef)
+}
+```
+
+##### PAGEBREAK
+
+```{r Imp ageatvac table, message=FALSE, echo=FALSE, results='asis', warning=FALSE}
+  #BCG vaccination
+if (imput) {
+  sum_imp_ageatvac %>% 
+              pretty_sum_results_table(footer = paste0('OR: odds ratio with 95% confidence intervals, aOR: adjusted odds ratio with 95% confidence intervals, fmi: fraction of missing information, * ', tb_death_footer),
+                                       col_names =  c('Outcome', 'Age group (years)', 'OR (95% CI)', 'P-value', 'fmi', 'aOR (95% CI)', 'P-value', 'fmi'),
+                                       label = 'sum_imp_ageatvac', 
+                                       caption =   'Summary of associations between age at vaccination and all outcomes, using pooled imputed data(reference is vaccination at <1 year).', 
+                                       cap_fun = SuptabRef)
+}
+```
+
+##### PAGEBREAK
+
+**Sensitivity analysis of the study population**
+
+```{r BCG vaccination summary table - varying study population, message=FALSE, echo=FALSE, results='asis', warning=FALSE}
+if (folder == 'main' && file.exists('../data/drop_recurrent/regression_analysis.rda') && file.exists('../data/elg_school_scheme/regression_analysis.rda')) { 
+  #Define function that loads each analysis and formats the table ready to be combined
+  read_rename_BCG_ass <- function(path, pop)
+  {
+    path <- paste0('../data/', path, '/regression_analysis.rda')
+    load(path)
+    tmp <- table_var_outs[[1]] %>% plyr::mutate(Population = NA) %>% add_row(Population = pop) %>% arrange(Population) %>% dplyr::select(Population, everything()) %>% map(function(.) ifelse(is.na(.), '', .)) %>% bind_cols
+    return(tmp)
+  }
+  
+  #Declare which results to append
+  append_results <- c('drop_recurrent', 'elg_school_scheme')
+  names(append_results) <- c('Recurrent cases dropped', 'Cases eligible for the \n schools scheme')
+  
+  #Append results
+  bcg_ass_main <- map2_df(append_results, names(append_results), read_rename_BCG_ass) %>% bind_rows
+
+  ## Make table
+  bcg_ass_main %>% 
+      pretty_sum_results_table(footer = paste0('OR: odds ratio with 95% confidence intervals, aOR: adjusted odds ratio with 95% confidence intervals, * ', tb_death_footer), 
+                              col_names = c('Study population', 'Outcome', 'BCG', 'OR (95% CI)', 'P-value', 'aOR (95% CI)', 'P-value'),
+                              label = 'BCGoutsumsens', 
+                              caption =   paste0('Summary of associations between BCG vaccination and all outcomes; cases that have no recurrent flag in the ETS (', nrow(uk_not %>% filter(is.na(recurrent))), '), and cases that would have been eligible for the BCG schools scheme (', elg_school_stats_sum['cases eligible for the schools scheme'] %>% as.numeric, '). Those defined to be eligible for the schools scheme are the UK born, that were aged 14 or over in 2004'), 
+                              cap_fun = SuptabRef)
+}
+```
+
+#####PAGEBREAK
+
+**Estimated power**
+
+Power estimates were calculated in both the univariable and multivariable datasets for all outcomes. This represents an over estimate of the statistical power, as only a single exposure variable was accounted for, and age at vaccination has been simplified to a binary vaccinated at birth variable (`r SuptabRef('power_table')`).
+
+```{r Estimate stat power of study, include=FALSE}
+bake(file = paste0('../data/', folder, '/estimate_study_power.rds'), {
+#source paper calc
+source('../functions/Power_calculation.R')
+
+#power_table
+power_table = function(var, variables_words, outcomes, covariates, outcomes_words,data)
+ {
+   
+if (var == 'VaccatBirth') 
+   {
+        data$VaccatBirth <- ifelse(!is.na(data$AgeatBCG), ifelse(data$AgeatBCG < 1, 'Yes', 'No'), NA) %>% factor
+        var_words <- "Age since vaccination (vaccination at birth vs. older)"
+   }else{
+       var_words <- variables_words[var]
+    }
+   
+   
+  uni <- outcomes %>% map_df( function(.) power_calc(data, ., var, cov = '', outcomes_words)) %>% select(Outcome, Power)
+ 
+  #Run for adjusted data
+  adj <- outcomes %>% map_df( function(.) power_calc(data, ., var, cov = covariates, outcomes_words)) %>% select(Power)
+ 
+  #Construct table
+  power_table <- paste0(uni$Power,'%') %>% as.matrix %>% t
+  power_table <- rbind(power_table, paste0(adj$Power, '%') %>% as.matrix %>% t)
+  power_table <- bind_cols(as_data_frame(c('&nbsp;&nbsp;Univariable', '&nbsp;&nbsp;Multivariable')), as_data_frame(power_table))
+  colnames(power_table) <- c('Analysis', outcomes_words)
+  
+  power_table[3,] <- c(var_words, rep('', length(outcomes_words)))
+  power_table <- bind_rows(power_table[3,], power_table[-3,])
+  return(power_table)
+  }
+  
+  # Power for BCG vaccination -----------------------------------------------
+  power_table_out <- power_table('bcgvacc', variables_words, outcomes, covariates, outcomes_words, uk_not)
+  
+  #Power for Years since vaccination
+  
+  power_table_out <- bind_rows(power_table_out, power_table('yrsinceBCG', variables_words, outcomes, covariates, outcomes_words, uk_not))
+  
+  # Power for Vaccination at birth -----------------------------------------------
+  
+  power_table_out <- bind_rows(power_table_out, power_table('VaccatBirth', variables_words, outcomes, covariates, outcomes_words, uk_not))
+
+}) -> power_table
+
+```
+
+```{r power table, echo=FALSE, message=FALSE, eval = TRUE}
+power_table %>% 
+ pretty_sum_results_table(label = 'power_table', 
+                           col_names = c('Exposure', colnames(.)[-1]),
+                           caption = 'Summary of the estimated power for each analysis, for both the univariable and multivariable data sets, with alpha set as 0.05. Power estimates assume a single exposure variable, and age at vaccination has been simplified into a binary vaccinated at birth variable', 
+                           cap_fun = SuptabRef
+ )
+```
+
+
+```{r LRT test of spline, include=FALSE}
+## Table of LRT tests
+bake(file = paste0('../data/', folder, '/LRT_test_spline.rds'), {
+tmp <- bind_cols(table_age_LRT[['linear spline']][[1]], table_age_LRT[['linear spline']][[3]][,-1], table_age_LRT[['linear spline']][[2]][,-1]) 
+
+#rename columns
+colnames(tmp) <- c('Outcomes', variables_words %>% map(function(.) . <- c(., 'Adjusted'))) %>% unlist
+tmp1 <- tmp
+}) -> LRT_test_spline
+```
+
+```{r LRT test table, include = FALSE, eval = FALSE}
+kable(LRT_test_spline)
+```
+

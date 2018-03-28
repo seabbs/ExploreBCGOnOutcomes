@@ -1,0 +1,2 @@
+load("/Users/sa15093-l/Dropbox/PhD/Projects/Data Analysis - GLM/Colindale/data/regression_analysis.rda")
+ls()
