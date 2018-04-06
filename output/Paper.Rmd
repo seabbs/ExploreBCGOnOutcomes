@@ -558,7 +558,7 @@ HC reports receiving honoraria from Sanofi Pasteur, and consultancy fees from As
 
 **Accessibility of data and programming code**
 
-The code for the analysis contained in this paper can be found at: [https://github.com/seabbs/ExploreBCGOnOutcomes](https://github.com/seabbs/ExploreBCGOnOutcomes)
+The code for the analysis contained in this paper can be found at: [doi.org/10.5281/zenodo.1213800](doi.org/10.5281/zenodo.1213800)
 
 ##### PAGEBREAK
 
