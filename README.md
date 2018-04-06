@@ -2,6 +2,8 @@
 Exploring the effects of BCG vaccination in patients diagnosed with tuberculosis: observational study using the Enhanced Tuberculosis Surveillance system
 =========================================================================================================================================================
 
+[![DOI](https://zenodo.org/badge/127124135.svg)](https://zenodo.org/badge/latestdoi/127124135)
+
 Abstract
 --------
 
