@@ -3,3 +3,5 @@
 .RData
 packrat/lib*/
 packrat/src/
+output/Paper.docx
+paper-formatted
