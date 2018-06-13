@@ -1,7 +1,7 @@
 ---
 title: '**Title:** Exploring the effects of BCG vaccination in patients diagnosed with tuberculosis: observational study using the Enhanced Tuberculosis Surveillance system'
 author: "Sam Abbott, Hannah Christensen, Maeve K Lalor, Dominik Zenner, Colin Campbell, Mary Ramsay, Ellen Brooks-Pollock"
-csl: ../common/vaccines.csl
+csl: ../common/vaccine.csl
 output:
   word_document:
     fig_caption: yes
@@ -289,13 +289,13 @@ We found that BCG vaccination was associated with reduced all-cause mortality in
 
 **Highlights**
 
-- Is there evidence in the Enhanced Tuberculosis (TB) Surveillance System that BCG vaccination improves TB outcomes?
+- Found evidence of an association between BCG vaccination and reduced all-cause mortality in TB cases.
 
-- This analysis suggests that vaccination with BCG is associated with reduced all-cause mortality for TB patients and potentially a reduced chance of having a repeat episode.
+- Weaker evidence of an association between BCG vaccination and reduced repeat TB episodes in TB cases.
 
 - There was little evidence of an association with other TB outcomes.
 
-- BCG vaccination could reduce all-cause mortality in TB cases and may decrease the number of repeat episodes in low incidence countries.
+- We explored the identified associations by age and time since vaccination.
 
 ##### PAGEBREAK
 

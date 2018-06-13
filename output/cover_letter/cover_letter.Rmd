@@ -1,5 +1,5 @@
 ---
-title: "Cover letter"
+title: ""
 output:
     word_document: 
         reference_docx: ../../common/style.docx
