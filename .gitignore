@@ -1,8 +1,7 @@
 .Rproj.user
 .Rhistory
 .RData
-packrat/lib*/
-packrat/src/
 output/Paper.docx
 output/reviews/
 output/paper-formatted/
+output/Paper.html
