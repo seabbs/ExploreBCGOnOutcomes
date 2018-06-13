@@ -1,0 +1,38 @@
+---
+title: "Vaccines"
+author: "Sam Abbott"
+date: "13/06/2018"
+output: word_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Text
+
+Highlighted the novel findings over the Abubakar et al. 2013 (10.3310/hta17370) review with the following in the discussion;
+
+- The meta-analysis performed by Abubakar et al. also found consistent evidence for this association but was limited by the number, and quality, of studies available.[@Abubakar2013] In contrast to our study, both of these meta-analyses estimated the protection from TB mortality in BCG vaccinated individuals rather than in BCG vaccinated cases. Additionally, neither study explored the association between BCG vaccination and all-cause mortality or recurrent TB.
+
+# Highlights
+
+Modified previous summary bullets to be highlights added the following sentance to the second bullet;
+
+- There was little evidence of an association with other TB outcomes.
+
+# Keywords
+
+Added the following;
+
+- non-specific
+- mortality
+
+# References
+
+I have added 4 new references to the introduction;
+
+- BCG vaccine: WHO position paper (https://doi.org/10.1016/j.vaccine.2018.03.009)
+- Causes of variation in BCG vaccine efficacy: Examining evidence from the BCG REVAC cluster randomized trial to explore the masking and the blocking hypotheses (https://doi.org/10.1016/j.vaccine.2014.05.042)
+- BCG scar and positive tuberculin reaction associated with reduced child mortality in West Africa: A non-specific beneficial effect of BCG? (https://doi.org/10.1016/S0264-410X(03)00181-6)
+
