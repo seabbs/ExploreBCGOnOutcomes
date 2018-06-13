@@ -16,4 +16,6 @@ RUN apt-get install -y \
     
 ADD . /home/rstudio/ExploreBCGOnOutcomes
 
-RUN Rscript -e 'setwd("/home/rstudio/ExploreBCGOnOutcomes"); install.packages("packrat"); packrat::restore()'
+WORKDIR /home/rstudio/ExploreBCGOnOutcomes
+
+Run Rscript -e "source('.Rprofile')"

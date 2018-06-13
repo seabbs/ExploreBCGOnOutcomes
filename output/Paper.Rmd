@@ -1,7 +1,7 @@
 ---
 title: '**Title:** Exploring the effects of BCG vaccination in patients diagnosed with tuberculosis: observational study using the Enhanced Tuberculosis Surveillance system'
 author: "Sam Abbott, Hannah Christensen, Maeve K Lalor, Dominik Zenner, Colin Campbell, Mary Ramsay, Ellen Brooks-Pollock"
-csl: ../common/bmj.csl
+csl: ../common/vaccines.csl
 output:
   word_document:
     fig_caption: yes

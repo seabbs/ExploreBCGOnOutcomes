@@ -4,4 +4,5 @@
 packrat/lib*/
 packrat/src/
 output/Paper.docx
-paper-formatted
+output/reviews/
+output/paper-formatted/
