@@ -1,0 +1,381 @@
+useDynLib(memisc)
+import(stats,grid,lattice,methods,MASS)
+importFrom(utils,
+           ls.str,
+           str,
+           toLatex,
+           head,
+           tail,
+           capture.output,
+           getFromNamespace,
+           View,
+           browseURL,
+           getS3method)
+export(
+      contr,
+      contr.treatment,
+      contr.sum,
+      cases,
+      colrename,
+      dimrename,
+      mtable,
+      write.mtable,
+      getSummary,
+      getSummary.glm,
+      getSummary.lm,
+      getSummary.polr,
+      getSummary.clm,
+      getSummary.simex,
+      getSummary.coxph,
+      getSummary.survreg,
+      getSummary.aftreg,
+      getSummary.phreg,
+      getSummary.weibreg,
+      getSummary.merMod,
+      getSummary_expcoef,
+      getSummary_expcoef.glm,
+      getSummary.ivreg,
+      getSummary.tobit,
+      getSummary.hurdle,
+      getSummary.betareg,
+      getSummary.multinom,
+      applyTemplate,
+      #get.substr,
+      getSummaryTemplate,
+      setSummaryTemplate,
+      getCoefTemplate,
+      setCoefTemplate,
+      recode,
+      relabel,
+      relabel4,
+      rename,
+      rowrename,
+      genTable,
+      Aggregate,
+      #wtable,
+      Table,
+      Descriptives,
+      percent,
+      percent.default,
+      percent.logical,
+      By,
+      Sapply,
+      Lapply,
+      sort.data.frame,
+      sort.data.set,
+      to.data.frame,
+      as.array,
+      as.item,
+      labels,
+      "labels<-",
+      value.filter,
+      valid.values,
+      missing.values,
+      valid.range,
+      "valid.values<-",
+      "valid.range<-",
+      "missing.values<-",
+      measurement,
+      "measurement<-",
+      include.missings,
+      annotation,
+      "annotation<-",
+      description,
+      "description<-",
+      wording,
+      "wording<-",
+      is.missing,
+      is.valid,
+      nvalid,
+      is.nominal,
+      is.ordinal,
+      is.interval,
+      is.ratio,
+      contrasts,
+      "contrasts<-",
+      data.set,
+      as.data.set,
+      is.data.set,
+      retain,
+      foreach,
+      syms,
+      as.symbols,
+      Substitute,
+      collect,
+      fapply,
+      "%nin%",
+      codebook,
+      wild.codes,
+      spss.fixed.file,
+      spss.portable.file,
+      spss.system.file,
+      Stata.file,
+      query,
+      relabel4,
+      Iconv,
+      Write,
+      mtable_format_print,
+      mtable_format_latex,
+      mtable_format_html,
+      mtable_format_delim,
+      show_html,
+      write_html,
+      format_html,
+      dsView,
+      summaryTemplate,
+      percentages
+      )
+S3method(getSummary,aftreg)
+S3method(getSummary,betareg)
+S3method(getSummary,clm)
+S3method(getSummary,coxph)
+S3method(getSummary,glm)
+S3method(getSummary,hurdle)
+S3method(getSummary,ivreg)
+S3method(getSummary,lm)
+S3method(getSummary,merMod)
+S3method(getSummary,multinom)
+S3method(getSummary,phreg)
+S3method(getSummary,polr)
+S3method(getSummary,simex)
+S3method(getSummary,survreg)
+S3method(getSummary,tobit)
+S3method(getSummary,weibreg)
+S3method(getSummary_expcoef,glm)
+S3method(sort,data.frame)
+S3method(sort,data.set)
+S3method(print,memisc_mtable)
+S3method(format,memisc_mtable)
+S3method(dim,memisc_mtable)
+S3method(dimnames,memisc_mtable)
+S3method("[",memisc_mtable)
+S3method(c,memisc_mtable)
+S3method(toLatex,default)
+S3method(toLatex,matrix)
+S3method(toLatex,memisc_mtable)
+S3method(toLatex,ftable)
+
+S3method(relabel,default)
+S3method(relabel,factor)
+S3method(relabel,memisc_mtable)
+S3method(relabel,table)
+S3method(relabel,ftable)
+
+S3method(reorder,matrix)
+S3method(reorder,array)
+S3method(collect,default)
+S3method(collect,matrix)
+S3method(collect,array)
+S3method(collect,table)
+S3method(collect,data.frame)
+S3method(collect,data.set)
+S3method(collect,by)
+S3method(fapply,default)
+S3method(percent,default)
+S3method(percent,logical)
+S3method(By,default)
+S3method(By,data.frame)
+
+exportClasses(
+  atomic,
+  value.labels,
+  value.filter,
+  valid.values,
+  valid.range,
+  missing.values,
+  annotation,
+  item,
+  double,
+  integer.item,
+  double.item,
+  character.item,
+  numeric.item,
+  item.vector,
+  named.list,
+  item.list,
+  data.set,
+  spss.fixed.importer,
+  spss.portable.importer,
+  spss.system.importer,
+  Stata.importer,
+  importer,
+  codebook,
+  datetime.item,
+  Date.item
+  )
+
+exportMethods(
+    as.item,
+    labels,
+    "labels<-",
+    value.filter,
+    valid.values,
+    missing.values,
+    valid.range,
+    "valid.values<-",
+    "valid.range<-",
+    "missing.values<-",
+    measurement,
+    "measurement<-",
+    annotation,
+    "annotation<-",
+    Arith,
+    Compare,
+    Math,
+    Math2,
+    Summary,
+    format,
+    print,
+    show,
+    unique,
+    "[",
+    "[<-",
+    "rep",
+    row.names,
+    dimnames,
+    as.array,
+    as.vector,
+    as.character,
+    as.numeric,
+    as.integer,
+    as.factor,
+    as.ordered,
+    contrasts,
+    as.data.set,
+    "contrasts<-",
+    summary,
+    within,
+    merge,
+    "%in%",
+    recode,
+    dim,
+    subset,
+    initialize,
+    coerce,
+    Table,
+    Descriptives,
+    codebook,
+    wild.codes,
+    sample,
+    query
+    )
+S3method(as.data.frame,character.item)
+S3method(as.data.frame,double.item)
+S3method(as.data.frame,integer.item)
+S3method("[[<-",data.set)
+S3method(str,data.set)
+S3method(str,integer.item)
+S3method(str,double.item)
+S3method(str,character.item)
+S3method(str,datetime.item)
+S3method(str,Date.item)
+S3method(as.list,data.set)
+S3method(as.data.frame,data.set)
+S3method(cbind,data.set)
+S3method(fapply,data.set)
+S3method(print,descriptions)
+S3method(Iconv,item)
+S3method(Iconv,value.labels)
+S3method(Iconv,annotation)
+S3method(Iconv,data.set)
+S3method(Iconv,importer)
+S3method(Write,descriptions)
+S3method(Write,codebook)
+
+S3method(format_html,memisc_mtable)
+S3method(format_html,ftable)
+S3method(format_html,codebook)
+S3method(format_html,codebookEntry)
+S3method(format_html,data.frame)
+
+S3method(sort,data.set)
+S3method(rbind,data.set)
+
+S3method(as.POSIXct,datetime.item)
+S3method(as.data.frame,datetime.item)
+S3method(as.data.frame,Date.item)
+
+S3method(xtfrm,integer.item)
+S3method(xtfrm,double.item)
+S3method(xtfrm,character.item)
+S3method(xtfrm,datetime.item)
+S3method(xtfrm,Date.item)
+S3method(unique,integer.item)
+S3method(unique,double.item)
+S3method(unique,character.item)
+S3method(unique,datetime.item)
+S3method(unique,Date.item)
+
+S3method(toLatex,data.frame)
+S3method(toLatex,data.set)
+
+S3method(percentages,table)
+S3method(percentages,formula)
+S3method(as.data.frame,percentage.table)
+S3method(as.data.frame,xpercentage.table)
+
+S3method(cbind,ftable)
+S3method(rbind,ftable)
+S3method(cbind,ftable_matrix)
+S3method(rbind,ftable_matrix)
+S3method(format,ftable_matrix)
+S3method(print,ftable_matrix)
+S3method(Write,ftable_matrix)
+
+S3method(toLatex,ftable_matrix)
+S3method(format_html,ftable_matrix)
+S3method(relabel,ftable_matrix)
+
+export(
+    df_format_stdstyle,
+    ftable_format_stdstyle,
+    mat_format_stdstyle,
+    mtable_format_stdstyle)
+
+export(html,content,attribs,style,
+  setContent,setStyle,setAttribs,
+  html_group,as.html_group,
+  css,as.css,
+  "content<-","attribs<-","style<-")
+  
+S3method(as.character,html_elem)
+S3method(print,html_elem)
+S3method(c,html_elem)
+S3method(format_html,html_elem)
+
+S3method(as.character,html_group)
+S3method(print,html_group)
+S3method(c,html_group)
+S3method("[",html_group)
+S3method("[<-",html_group)
+S3method(format_html,html_group)
+
+
+S3method(setAttribs,html_elem)
+S3method(setAttribs,html_group)
+S3method("[<-",html_attributes)
+
+S3method(as.character,css)
+S3method(print,css)
+S3method(setStyle,html_elem)
+S3method(setStyle,html_group)
+S3method("[<-",css)
+
+S3method(format_html,descriptions)
+
+export(withSE,withVCov)
+S3method(withVCov,lm)
+S3method(vcov,withVCov)
+S3method(summary,withVCov)
+S3method(summary,withVCov.lm)
+
+importFrom(repr,
+           repr_html,
+           repr_latex)
+S3method(repr_html,memisc_mtable)
+S3method(repr_html,ftable)
+S3method(repr_html,ftable_matrix)
+S3method(repr_html,html_elem)
+S3method(repr_html,html_group)
+
+S3method(repr_latex,memisc_mtable)

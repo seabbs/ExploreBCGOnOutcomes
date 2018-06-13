@@ -1,0 +1,14 @@
+Rcgmin                  An R implementation of a nonlinear conjugate
+                        gradient algorithm with the Dai / Yuan update
+                        and restart. Based on Nash (1979) Algorithm 22
+                        for its main structure.
+Rcgminb                 An R implementation of a bounded nonlinear
+                        conjugate gradient algorithm with the Dai /
+                        Yuan update and restart. Based on Nash (1979)
+                        Algorithm 22 for its main structure. CALL THIS
+                        VIA 'Rcgmin' AND DO NOT USE DIRECTLY.
+Rcgminu                 An R implementation of an unconstrained
+                        nonlinear conjugate gradient algorithm with the
+                        Dai / Yuan update and restart. Based on Nash
+                        (1979) Algorithm 22 for its main structure.
+                        CALL THIS VIA 'Rcgmin' AND DO NOT USE DIRECTLY.

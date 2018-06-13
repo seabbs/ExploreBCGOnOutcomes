@@ -1,0 +1,123 @@
+		 CHANGES IN servr VERSION 0.10
+
+NEW FEATURES
+
+- Added a function `browse_last()` to reopen the last browsed page.
+
+MAJOR CHANGES
+
+- The `daemon` argument in `server_config()` now defaults to `interactive()`, i.e., **servr** starts a daemonized server that does not block your interactive R session by default.
+
+		 CHANGES IN servr VERSION 0.9
+
+BUG FIXES
+
+- The web browser may be opened too early (before the server is ready) (originally reported at rstudio/rstudio#2475).
+
+		 CHANGES IN servr VERSION 0.8
+
+NEW FEATURES
+
+- added another implementation of the daemoinzed server based on the later package, since the previous implmentation based on `httpuv::startDaemonizedServer()` could crash the R session on Windows
+
+		 CHANGES IN servr VERSION 0.7
+
+NEW FEATURES
+
+- added a new argument `watch` to `servr::httw()`
+
+- exported the function `server_config()`
+
+BUG FIXES
+
+- files/directories that contain multibyte characters in path names cannot be served correctly (thanks, Hao Peng)
+
+		 CHANGES IN servr VERSION 0.6
+
+NEW FEATURES
+
+- on 404 (page not found), 404.html will be displayed if it exists under the
+  root directory
+
+- improved the support for HTTP Range requests, e.g. servr can correctly serve
+  MP4 videos now in major browsers including Safari
+
+BUG FIXES
+
+- servr should decode requested paths before reading them (https://github.com/rstudio/blogdown/issues/85)
+
+		 CHANGES IN servr VERSION 0.5
+
+NEW FEATURES
+
+- added an argument `initpath` to `server_config()` so you can open a specific
+  path initially in the web browser
+
+- the `daemon` argument of `server_config()` takes the default value from the
+  global option `getOption('servr.daemon')` now, e.g., you can set
+  `options(servr.daemon = TRUE)` so that the daemonized server is always used
+
+		 CHANGES IN servr VERSION 0.4.1
+
+NEW FEATURES
+
+- excluded ports considered unsafe by Chrome http://superuser.com/a/188070 when
+  selecting a random port automatically
+
+BUG FIXES
+
+- fixed a bug in 301 redirection when serving a directory without the trailing
+  slash
+
+		 CHANGES IN servr VERSION 0.4
+
+NEW FEATURES
+
+- you can disable websocket listening on an HTML page using a special HTML
+  comment `<!-- DISABLE-SERVR-WEBSOCKET -->` when servr is serving and watching
+  a directory, so that this page will not communicate with R (e.g. when it is
+  updated, R will not send signals to refresh it) (thanks @hafen, #25)
+
+- a random TCP port will be used if the port 4321 is not available
+
+		 CHANGES IN servr VERSION 0.3
+
+NEW FEATURES
+
+- added a function `httw()` to watch for changes under a directory and refresh
+  an HTML page automatically (if it is being viewed in the browser) when any
+  files are modified
+
+- servr accepts HTTP Range requests now (thanks, @rekado, #21)
+
+BUG FIXES
+
+- servr did not work with RStudio Server (#20)
+
+		 CHANGES IN servr VERSION 0.2
+
+NEW FEATURES
+
+- when running inside RStudio, the RStudio web browser will be used if
+  available (requires RStudio >= 0.98.439)
+
+- added three server functions jekyll(), rmdv1(), and rmdv2() to serve Jekyll
+  websites, R Markdown v1, and R Markdown v2 documents, respectively
+
+- added a server function vign() to serve R Markdown/HTML package vignettes
+
+- added a server function make() to serve a directory and update files
+  automatically via Makefile (#2)
+
+- the URL pathname foo will be redirected to foo/ automatically if foo is a
+  directory (#5)
+
+- in case of errors when serving dynamic documents, the server functions will
+  double the delay to check for updates and wait for the next build until the
+  error is cleared (like Gmail)
+
+		 CHANGES IN servr VERSION 0.1
+
+NEW FEATURES
+
+- the main function httd() to start an HTTP server for a local directory

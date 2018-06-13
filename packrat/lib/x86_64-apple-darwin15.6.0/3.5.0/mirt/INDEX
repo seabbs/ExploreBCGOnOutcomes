@@ -1,0 +1,99 @@
+Bock1997                Description of Bock 1997 data
+DIF                     Differential item functioning statistics
+DTF                     Differential test functioning statistics
+DiscreteClass-class     Class "DiscreteClass"
+LSAT6                   Description of LSAT6 data
+LSAT7                   Description of LSAT7 data
+M2                      Compute the M2 model fit statistic
+MDIFF                   Compute multidimensional difficulty index
+MDISC                   Compute multidimensional discrimination index
+MixedClass-class        Class "MixedClass"
+MixtureClass-class      Class "MixtureClass"
+MultipleGroupClass-class
+                        Class "MultipleGroupClass"
+PLCI.mirt               Compute profiled-likelihood (or posterior)
+                        confidence intervals
+SAT12                   Description of SAT12 data
+SIBTEST                 Simultaneous Item Bias Test (SIBTEST)
+Science                 Description of Science data
+SingleGroupClass-class
+                        Class "SingleGroupClass"
+anova-method            Compare nested models with likelihood-based
+                        statistics
+areainfo                Function to calculate the area under a
+                        selection of information curves
+averageMI               Collapse values from multiple imputation draws
+bfactor                 Full-Information Item Bi-factor and Two-Tier
+                        Analysis
+boot.LR                 Parametric bootstrap likelihood-ratio test
+boot.mirt               Calculate bootstrapped standard errors for
+                        estimated models
+coef-method             Extract raw coefs from model object
+createGroup             Create a user defined group-level object with
+                        correct generic functions
+createItem              Create a user defined item with correct generic
+                        functions
+deAyala                 Description of deAyala data
+empirical_ES            Empirical effect sizes based on latent trait
+                        estimates
+empirical_plot          Function to generate empirical unidimensional
+                        item and test plots
+empirical_rxx           Function to calculate the empirical (marginal)
+                        reliability
+estfun.AllModelClass    Extract Empirical Estimating Functions
+expand.table            Expand summary table of patterns and
+                        frequencies
+expected.item           Function to calculate expected value of item
+expected.test           Function to calculate expected test score
+extract.group           Extract a group from a multiple group mirt
+                        object
+extract.item            Extract an item object from mirt objects
+extract.mirt            Extract various elements from estimated model
+                        objects
+fixef                   Compute latent regression fixed effect expected
+                        values
+fscores                 Compute factor score estimates (a.k.a, ability
+                        estimates, latent trait estimates, etc)
+imputeMissing           Imputing plausible data for missing values
+itemGAM                 Parametric smoothed regression lines for item
+                        response probability functions
+itemfit                 Item fit statistics
+iteminfo                Function to calculate item information
+itemplot                Displays item surface and information plots
+key2binary              Score a test by converting response patterns to
+                        binary data
+lagrange                Lagrange test for freeing parameters
+logLik-method           Extract log-likelihood
+marginal_rxx            Function to calculate the marginal reliability
+mdirt                   Multidimensional discrete item response theory
+mirt                    Full-Information Item Factor Analysis
+                        (Multidimensional Item Response Theory)
+mirt-package            Full information maximum likelihood estimation
+                        of IRT models.
+mirt.model              Specify model loadings
+mirtCluster             Define a parallel cluster object to be used in
+                        internal functions
+mixedmirt               Mixed effects modeling for MIRT models
+mod2values              Convert an estimated mirt model to a data.frame
+multipleGroup           Multiple Group Estimation
+numerical_deriv         Compute numerical derivatives
+personfit               Person fit statistics
+plot-method             Plot various test-implied functions from models
+poly2dich               Change polytomous items to dichotomous item
+                        format
+print-method            Print the model objects
+print.mirt_df           Print generic for customized data.frame console
+                        output
+print.mirt_list         Print generic for customized list console
+                        output
+print.mirt_matrix       Print generic for customized matrix console
+                        output
+probtrace               Function to calculate probability trace lines
+randef                  Compute posterior estimates of random effect
+residuals-method        Compute model residuals
+show-method             Show model object
+simdata                 Simulate response patterns
+summary-method          Summary of model object
+testinfo                Function to calculate test information
+vcov-method             Extract parameter variance covariance matrix
+wald                    Wald statistics for mirt models

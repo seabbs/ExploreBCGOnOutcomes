@@ -1,0 +1,22 @@
+CrossTable              Cross tabulation with tests for factor
+                        independence
+LogRegR2                Pseudo R2 of logistic regression
+compmeans               Means of a numerical vector according to a
+                        factor
+crosstab                Cross tabulation with mosaic plot
+data.frame2txt          Export a data.frame and create scripts to input
+                        the data again.
+descr                   Summary of an object
+file.head               Prints first lines of a file.
+forODFTable             Convert an object of class CrossTable into a
+                        matrix for odfTable
+freq                    Frequency table
+fromUTF8                Conversion from UTF-8 encoding
+fwf2csv                 Fast conversion of a fwf file into a csv one
+histkdnc                Histogram with kernel density and normal curve
+labels2R                Conversion of specially written text file into
+                        R code
+plot.CrossTable         Mosaic plot from object of class CrossTable
+plot.freqtable          Bar plot from object of class freqtable
+toUTF8                  Conversion to UTF-8 encoding
+xtable.CrossTable       CrossTable method for xtable

@@ -1,0 +1,67 @@
+-------------- AGD NEWS-------------------------------------------
+
+AGD: Analysis of Growth Data
+
+Tools for the NIHES course 'Analysis of Growth Data'
+Stef van Buuren (TNO, UU), Paul Eilers (EUR)
+
+Stef van Buuren - stef.vanbuuren@tno.nl
+
+---------------------------------------------------------------------
+
+
+CHANGELOG AGD
+~~~~~~~~~~~~~~
+v0.39 - 29-05-2018 / SvB
+- change default SDS for unmatched entries to NA
+
+v0.38 - 03-05-2017 / SvB
+- export functions properly
+
+V0.37 - 15-05-2016 / SvB
+- y2z() and z2y() return NA's instead of error
+
+V0.35 - 27-05-2015 / SvB
+- Syntax warnings eliminated
+
+V0.34 - 12-05-2015 / SvB
+- WHO tail adjustment procedure added
+
+V0.33 - 11-05-2015 / SvB
+- WHO references hgt, wgt, bmi, wfh, wfl added
+
+V0.32 - 11-01-2015 / SvB
+- maintainance update to update CITATION file 
+
+V0.31 - 20-12-2014 / SvB
+- maintainance update according to CRAN policies 
+
+V0.30 - 06-05-2012 / SvB 
+- changed   boys is renamed as boys7482
+- deleted   boys10 (is present as 'boys' in package mice)
+- updated   documentation changes
+- updated   wp.twin() function
+
+V0.20 - 24-04-2010 / SvB
+- added     new functions extractLMS() and ageGrid()
+
+V0.14 - 18-03-2010 / SvB
+- added     y2z() and z2y() changed to work with subpopulations
+- added     reference structure redefined
+- added     many new references
+
+V0.13 - 14-03-2010 / SvB
+- changed   reference data changed to type LMS, functions x2y() and y2x() updated accordingly
+
+V0.12 - 13-03-2010 / SvB
+- added     wp.twin() function
+
+V0.11 - 10-03-2010 / SvB
+- changed   x2y() and y2x() now work for unisex references
+- added     references cdc.bfa, cdc.hfa
+- changed   boys is now big dataset, boys10 the subsample
+- changed   changes in documentation
+- added     course.r code stored in inst/doc
+
+V0.1 - 08-03-2010 / SvB
+First release

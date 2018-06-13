@@ -1,0 +1,20 @@
+importFrom("MASS", ginv)
+importFrom("survey",
+            svyvar,
+            svymean, 
+            degf,
+            pFsum)
+importFrom("lavaan",
+            lavaanNames,
+            lav_matrix_vech,
+            lav_matrix_duplication_ginv,
+            lav_matrix_bdiag,
+            lavInspect, 
+            lavTech,
+            fitMeasures)
+importFrom("stats", 
+           as.formula,
+           cov, 
+           median)
+export("lavaan.survey")
+export("pval.pFsum")

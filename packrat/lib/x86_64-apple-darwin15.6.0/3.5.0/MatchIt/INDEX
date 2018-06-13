@@ -1,0 +1,9 @@
+get_matches             Get matches from matchit object
+help.matchit            HTML Help for Matchit Commands and Models
+is.matchit              Checks matchit Class
+lalonde                 Data from National Supported Work Demonstration
+                        and PSID, as analyzed by Dehejia and Wahba
+                        (1999).
+match.data              Output Matched Data Sets
+matchit                 MatchIt: Matching Software for Causal Inference
+user.prompt             Pause in demo files

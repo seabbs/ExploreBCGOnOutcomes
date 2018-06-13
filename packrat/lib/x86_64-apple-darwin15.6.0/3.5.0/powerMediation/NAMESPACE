@@ -1,0 +1,41 @@
+import(stats)
+
+# functions
+export(
+  minEffect.SLR,
+  minEffect.VSMc,
+  minEffect.VSMc.logistic,
+  minEffect.VSMc.poisson,
+  minEffect.VSMc.cox,
+  powerInteract,
+  powerLogisticBin,
+  powerLogisticCon,
+  powerLong,
+  powerLongFull,
+  powerLong.multiTime,
+  powerLongFull,
+  powerMediation.Sobel,
+  powerMediation.VSMc,
+  powerMediation.VSMc.logistic,
+  powerMediation.VSMc.poisson,
+  powerMediation.VSMc.cox,
+  powerPoisson,
+  power.SLR,
+  power.SLR.rho,
+  sizePoisson,
+  SSizeLogisticBin,
+  SSizeLogisticCon,
+  ssLong,
+  ssLongFull,
+  ssLong.multiTime,
+  ssMediation.Sobel,
+  ssMediation.VSMc,
+  ssMediation.VSMc.logistic,
+  ssMediation.VSMc.poisson,
+  ssMediation.VSMc.cox,
+  ss.SLR,
+  ss.SLR.rho,
+  testMediation.Sobel
+)
+
+

@@ -1,0 +1,32 @@
+Changes in Rcgmin
+
+Changes before 2012-4-30 not recorded 
+
+TODOS
+   o    Eventually include different line searches, possibly in a
+        separate routine
+
+2014-12-21 
+
+   o    As per CRAN policies, edited DESCRIPTION and NAMESPACE file. 
+	Because there is no change to code, the date of the package 
+	advanced by only 1 day.
+
+   o    Removed require() from code. Not needed.
+
+
+2013-2-20
+
+   o    Removed fail, setstep (not used), ceps from Rcgminu (not used)
+
+2012-8-08
+
+   o    Minor edits and addition of references.
+
+2012-6-09
+
+   o    User-tolerance for gradient size.
+
+2012-5-21
+   o	Separation of constrained and unconstrained versions.
+

@@ -1,0 +1,124 @@
+CDM-package             Cognitive Diagnosis Modeling: The R Package
+                        'CDM'
+CDM-utilities           Utility Functions in 'CDM'
+Data-sim                Artificial Data: DINA and DINO
+IRT.IC                  Information Criteria
+IRT.RMSD                Root Mean Square Deviation (RMSD) Item Fit
+                        Statistic
+IRT.anova               Helper Function for Conducting Likelihood Ratio
+                        Tests
+IRT.classify            Individual Classification for Fitted Models
+IRT.compareModels       Comparisons of Several Models
+IRT.data                S3 Method for Extracting Used Item Response
+                        Dataset
+IRT.expectedCounts      S3 Method for Extracting Expected Counts
+IRT.factor.scores       S3 Methods for Extracting Factor Scores (Person
+                        Classifications)
+IRT.frequencies         S3 Method for Computing Observed and Expected
+                        Frequencies of Univariate and Bivariate
+                        Marginals
+IRT.irfprob             S3 Methods for Extracting Item Response
+                        Functions
+IRT.irfprobPlot         Plot Item Response Functions
+IRT.itemfit             S3 Methods for Computing Item Fit
+IRT.jackknife           Jackknifing an Item Response Model
+IRT.likelihood          S3 Methods for Extracting of the Individual
+                        Likelihood and the Individual Posterior
+IRT.modelfit            S3 Methods for Assessing Model Fit
+IRT.parameterTable      S3 Method for Extracting a Parameter Table
+IRT.predict             Expected Values and Predicted Probabilities
+                        from Item Response Response Models
+IRT.repDesign           Generation of a Replicate Design for
+                        'IRT.jackknife'
+WaldTest                Wald Test for a Linear Hypothesis
+anova.din               Likelihood Ratio Test for Model Comparisons
+cdi.kli                 Cognitive Diagnostic Indices based on
+                        Kullback-Leibler Information
+cdm.est.class.accuracy
+                        Classification Reliability in a CDM
+coef.din                Extract Estimated Item Parameters and Skill
+                        Class Distribution Parameters
+data.Students           Dataset Student Questionnaire
+data.cdm                Several Datasets for the 'CDM' Package
+data.dcm                Dataset from Book 'Diagnostic Measurement' of
+                        Rupp, Templin and Henson (2010)
+data.dtmr               DTMR Fraction Data (Bradshaw et al., 2014)
+data.ecpe               Dataset ECPE
+data.fraction           Fraction Subtraction Dataset with Different
+                        Subsets of Data and Different Q-Matrices
+data.hr                 Dataset 'data.hr' (Ravand et al., 2013)
+data.jang               Dataset Jang (2009)
+data.melab              MELAB Data (Li, 2011)
+data.mg                 Large-Scale Dataset with Multiple Groups
+data.pgdina             Dataset for Polytomous GDINA Model
+data.pisa00R.ct         PISA 2000 Reading Study (Chen & de la Torre,
+                        2014)
+data.sda6               Dataset SDA6 (Jurich & Bradshaw, 2014)
+data.timss03.G8.su      TIMSS 2003 Mathematics 8th Grade (Su et al.,
+                        2013)
+data.timss07.G4.lee     TIMSS 2007 Mathematics 4th Grade (Lee et al.,
+                        2011)
+data.timss11.G4.AUT     TIMSS 2011 Mathematics 4th Grade Austrian
+                        Students
+deltaMethod             Variance Matrix of a Nonlinear Estimator Using
+                        the Delta Method
+din                     Parameter Estimation for Mixed DINA/DINO Model
+din.deterministic       Deterministic Classification and Joint Maximum
+                        Likelihood Estimation of the Mixed DINA/DINO
+                        Model
+din.equivalent.class    Calculation of Equivalent Skill Classes in the
+                        DINA/DINO Model
+din.validate.qmatrix    Q-Matrix Validation (Q-Matrix Modification) for
+                        Mixed DINA/DINO Model
+discrim.index           Discrimination Indices at Item-Attribute, Item
+                        and Test Level
+entropy.lca             Test-specific and Item-specific Entropy for
+                        Latent Class Models
+equivalent.dina         Determination of a Statistically Equivalent
+                        DINA Model
+eval_likelihood         Evaluation of Likelihood
+fraction.subtraction.data
+                        Fraction Subtraction Data
+fraction.subtraction.qmatrix
+                        Fraction Subtraction Q-Matrix
+gdd                     Generalized Distance Discriminating Method
+gdina                   Estimating the Generalized DINA (GDINA) Model
+gdina.dif               Differential Item Functioning in the GDINA
+                        Model
+gdina.wald              Wald Statistic for Item Fit of the DINA and
+                        ACDM Rule for GDINA Model
+gdm                     General Diagnostic Model
+ideal.response.pattern
+                        Ideal Response Pattern
+item_by_group           Create Dataset with Group-Specific Items
+itemfit.rmsea           RMSEA Item Fit
+itemfit.sx2             S-X2 Item Fit Statistic for Dichotomous Data
+logLik.din              Extract Log-Likelihood
+mcdina                  Multiple Choice DINA Model
+modelfit.cor            Assessing Model Fit and Local Dependence by
+                        Comparing Observed and Expected Item Pair
+                        Correlations
+numerical_Hessian       Numerical Computation of the Hessian Matrix
+osink                   Opens and Closes a 'sink' Connection
+personfit.appropriateness
+                        Appropriateness Statistic for Person Fit
+                        Assessment
+plot.din                Plot Method for Objects of Class din
+print.summary.din       Print Method for Objects of Class summary.din
+reglca                  Regularized Latent Class Analysis
+sequential.items        Constructing a Dataset with Sequential Pseudo
+                        Items for Ordered Item Responses
+sim.din                 Data Simulation Tool for DINA, DINO and mixed
+                        DINA and DINO Data
+sim.gdina               Simulation of the GDINA model
+sim_model               Simulate an Item Response Model
+skill.cor               Tetrachoric or Polychoric Correlations between
+                        Attributes
+skillspace.approximation
+                        Skill Space Approximation
+skillspace.hierarchy    Creation of a Hierarchical Skill Space
+slca                    Structured Latent Class Analysis (SLCA)
+summary.din             Summary Method for Objects of Class din
+summary_sink            Prints 'summary' and 'sink' Output in a File
+vcov.din                Asymptotic Covariance Matrix, Standard Errors
+                        and Confidence Intervals

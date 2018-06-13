@@ -1,0 +1,31 @@
+axsearch                Perform axial search around a supposed minimum
+                        and provide diagnostics
+bmchk                   Check bounds and masks for parameter
+                        constraints used in nonlinear optimization
+bmstep                  Compute the maximum step along a search
+                        direction.
+fnchk                   Run tests, where possible, on user objective
+                        function
+gHgen                   Generate gradient and Hessian for a function at
+                        given parameters.
+gHgenb                  Generate gradient and Hessian for a function at
+                        given parameters.
+grback                  Backward difference numerical gradient
+                        approximation.
+grcentral               Central difference numerical gradient
+                        approximation.
+grchk                   Run tests, where possible, on user objective
+                        function and (optionally) gradient and hessian
+grfwd                   Forward difference numerical gradient
+                        approximation.
+grnd                    A reorganization of the call to numDeriv grad()
+                        function.
+hesschk                 Run tests, where possible, on user objective
+                        function and (optionally) gradient and hessian
+kktchk                  Check Kuhn Karush Tucker conditions for a
+                        supposed function minimum
+optextras               A replacement and extension of the optim()
+                        function, plus various optimization tools
+scalechk                Check the scale of the initial parameters and
+                        bounds input to an optimization code used in
+                        nonlinear optimization

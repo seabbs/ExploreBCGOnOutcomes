@@ -1,0 +1,19 @@
+_index_                 Magick Image Processing
+analysis                Image Analysis
+animation               Image Frames and Animation
+as_EBImage              Convert to EBImage
+attributes              Image Attributes
+autoviewer              RStudio AutoViewer
+coder_info              Magick Configuration
+color                   Image Color
+composite               Image Composite
+device                  Magick Graphics Device
+editing                 Image Editing
+effects                 Image Effects
+geometry                Geometry Helpers
+image_ggplot            Image to ggplot
+ocr                     Image Text OCR
+options                 Magick Options
+painting                Image Painting
+transform               Image Transform
+wizard                  Example Images

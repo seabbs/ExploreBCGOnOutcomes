@@ -1,0 +1,211 @@
+\documentclass[12pt]{article}
+\usepackage{Sweave,amsmath,amsfonts,bm}
+\usepackage[authoryear,round]{natbib}
+\bibliographystyle{plainnat}
+\DefineVerbatimEnvironment{Sinput}{Verbatim}
+{formatcom={\vspace{-1ex}},fontshape=sl,
+  fontfamily=courier,fontseries=b, fontsize=\footnotesize}
+\DefineVerbatimEnvironment{Soutput}{Verbatim}
+{formatcom={\vspace{-1ex}},fontfamily=courier,fontseries=b,%
+  fontsize=\footnotesize}
+%%\VignetteIndexEntry{User's Guide}
+%%\VignetteDepends{PKPDmodels,lattice}
+\title{User's Guide for the PKPDmodels Package}
+\author{
+  Douglas Bates\\
+  Dept. of Statistics, University of Wisconsin - Madison, U.S.A.\\
+  and\\
+  France Mentr\'{e}\\
+  UMR738, INSERM, University Paris Diderot\\
+}
+\SweaveOpts{engine=R,eps=FALSE,pdf=TRUE,strip.white=true,keep.source=TRUE}
+\SweaveOpts{include=TRUE}
+\setkeys{Gin}{width=\textwidth}
+%% commands
+\makeatletter
+\newcommand\code{\bgroup\@makeother\_\@makeother\~\@makeother\$\@codex}
+\def\@codex#1{{\normalfont\ttfamily\hyphenchar\font=-1 #1}\egroup}
+\makeatother
+%%\let\code=\texttt
+\let\proglang=\textsf
+\newcommand{\pkg}[1]{{\fontseries{b}\selectfont #1}}
+\newcommand{\Cl}{\ensuremath{\mathit{Cl}}}
+\begin{document}
+<<preliminaries,echo=FALSE,results=hide>>=
+options(width=69,digits=5,show.signif.stars=FALSE,str=strOptions(strict.width="cut"))
+library(PKPDmodels)
+library(lattice)
+#lattice.options(default.theme = function() standard.theme())
+lattice.options(default.theme = function() standard.theme(color=FALSE))
+@
+\maketitle
+\begin{abstract}
+  The \pkg{PKPDmodels} package provides a function, \code{PKmod},
+  that is used to generate model functions for 1, 2, or 3 compartment
+  pharmacokinetic models with linear elimination kinetics.  The form
+  of administration can be intravenous bolus, infusion or oral
+  administration with first-order absorption.  The model can be for
+  single dose, multiple doses or steady-state conditions.
+\end{abstract}
+
+\section{Introduction}
+\label{sec:Intro}
+
+A pharmacokinetic model describes the concentration of an analyte in
+the central compartment of a compartment model as a function of time
+and other covariates such as dose.  The \code{PKmod} function
+generates model functions for pharmacokinetic models with linear
+elimination kinetics.  The mode of administration can be intravenous
+bolus, continuous infusion or oral with first-order absorption
+kinetics.  The dosage can be a single dose, multiple doses or the
+steady-state condition after multiple doses.
+
+The pharmacokinetic parameters can be expressed as an elimination rate
+constant, $k$ (units of 1/time), the clearance rate, $\Cl$ (units of
+volume per unit time) or volume of distribution, $V$ (units of
+volume).  Only two of these three parameters are specified because of
+the relationship
+\begin{displaymath}
+  k = \frac{\Cl}{V}
+\end{displaymath}
+
+Some types of models include other parameters such as the absorption
+rate constant, $k_a$, for oral doses with first-order absorption.
+
+By default the function that is returned is a byte-compiled function
+that evaluates both the expected values of the concentration in the
+central compartment and the gradient with respect to the parameters.
+There is an option to create a function that will evaluate the
+expected value of the response and the gradient and the Hessian.
+Although a
+default set of parameters is provided, these can be modified by a
+set of parameter transformations.  For example, the default
+parameterization for a one-compartment model uses the
+elimination rate constant, $k$, and the clearance, $\Cl$ but the model
+can be expressed in terms of the volume of distribution, $V$, and the
+clearance, $\Cl$, by including the transformation \code{k ~ V/Cl}.
+For population pharmacokinetics it is often helpful to transform from
+parameters such as $\Cl$ and $V$ to their logarithms.
+
+\section{A simple example}
+\label{sec:simple}
+
+A PK model with linear elimination for a single-dose bolus injection
+can be expressed in terms of the elimination rate constant, $k$, and
+the volume of distribution, $V$, as
+\begin{displaymath}
+  C(t) = \frac{D\exp(-k\,t)}{V}
+\end{displaymath}
+where $C(t)$ is the concentration in the central compartment at time
+$t$ (since administration of the dose) and $D$ is the dose.  The
+corresponding formula in \proglang{R} is 
+<<bolus_1cpt_sd_Vk_expr>>=
+PKexpr("bolus", "sd")
+@
+
+If we wish to transform to another set of parameters, we specify the
+transformations as a list of formulas.  For example, to express the
+model in terms of the volume of distribution, $V$, and the clearance,
+$\Cl$,
+<<bolus1cptSdVClExpr>>=
+PKexpr("bolus", "sd", list(k ~ Cl/V))
+@ 
+or, to express the model in terms of $\log(V)$ and $\log(\Cl)$,
+<<bolus1cptSdlVlClExpr>>=
+PKexpr("bolus", "sd", list(k ~ Cl/V, Cl ~ exp(lCl), V ~ exp(lV)))
+@
+Note that a substitution formula has the parameter name on the
+left and the expression to be substituted for that parameter on the
+right. When there are multiple substitution formulas they are
+evaluated left to right.
+
+The function \code{PK1expr} exists solely so that the user can verify
+that the formula being used is what they expect.  In typical usage we
+create the model function directly.
+<<bolus_1cpt_sd_Vk_expr>>=
+(bolus1cptSdVk <- PKmod("bolus", "sd"))
+@ 
+When this function is evaluated at given values of \code{dose},
+\code{time} and the pharmacokinetic parameters, it returns the
+function evaluations with an attribute called \code{"gradient"}.
+<<bolusSdVkEval>>=
+tvals <- 0:10
+bolus1cptSdVk(dose=1, t=tvals, k=0.3, V=1)
+@ 
+
+When fitting pharmacokinetic models, especially population
+pharmacokinetic models, it is helpful to have this analytic gradient
+evaluation rather than calculating numerical gradients.  Because
+common sub-expressions in the gradient columns and the model function
+are evaluated once only and because the resulting function consists of
+rather simple byte-compiled expressions the evaluation of the model
+function and gradient is essentially as fast as the evaluation of the
+model function itself.
+
+The evaluation of common sub-expressions is more obvious when several
+parameter transformations are applied
+<<bolusSdlVlCl>>=
+(bolus1cptSdlVlCl <-
+ PKmod("bolus", "sd", list(k ~ Cl/V, Cl ~ exp(lCl), V ~ exp(lV))))
+@
+where we can see that the clearance, $\Cl=\exp(\mathit{lCl})$
+(\code{.expr1}), the volume of distribution, $V=\exp{\mathit(lV)}$
+(\code{.expr2}), and the elimination rate constant, $k=\Cl/V$
+(\code{.expr3}) are each evaluated once only.
+
+Expressing the parameters in this formulation we obtain the same
+function evaluation as before
+<<bolusSdlVlClEval>>=
+bolus1cptSdlVlCl(dose=1, t=tvals, lCl=log(0.3), lV=0)
+@
+Naturally the gradient has changed because we are calculating the
+derivatives with respect to a different set of parameters.
+
+\section{Single oral dose}
+\label{sec:simple}
+
+In phase 1 and phase 2 clinical trials population pharmacokinetics are
+often assessed by sampling at many closely-spaced time points in a
+small number of subjects after a single oral dose.  The \code{Theoph}
+data set in the \pkg{datasets} package comes from such a study of the
+drug theophylline which is used in the treatment of asthma.
+<<strTheoph, echo=FALSE>>=
+str(Theoph <- data.frame(lapply(Theoph, function(x) x)))
+@ 
+These data are shown in Figure~\ref{fig:Theophplot}.
+\begin{figure}[tb]
+  \centering
+<<Theophplot,fig=TRUE,echo=FALSE,height=3>>=
+print(xyplot(conc ~ Time|reorder(Subject, Theoph$conc, max),
+             Theoph, type=c("g","b"),
+             xlab="Time since drug administration (hr)",
+             ylab="Serum concentration (mg/l)",
+             aspect="xy", layout=c(6,2)))
+@   
+\caption{Concentration of theophylline versus time for 12 subjects
+  following a single oral dose of the drug.  The panels have been
+  ordered (left to right starting at the bottom row) by increasing
+  maximum concentration.}
+  \label{fig:Theophplot}
+\end{figure}
+
+A model function for a single oral dose with first-order absorption
+using the parameters $\log(k_a)$, $\log(V)$ and $\log(\Cl)$ is
+<<oral1cptSdlkalVlCl>>=
+oral1cptSdlkalVlCl <-
+ PKmod("oral", "sd", list(ka ~ exp(lka), k ~ exp(lCl)/V, V ~ exp(lV)))
+@ 
+corresponding to the formula
+<<oral1cptSdlkalVlCl>>=
+PKexpr("oral", "sd", list(ka ~ exp(lka), k ~ exp(lCl)/V, V ~ exp(lV)))
+@ 
+
+Initial values for the parameters are taken to be $\log(V)_0=-1$,
+$\log(k_a)_0=0.5$ and $\log(\Cl)_0=-4$ producing a fitted model
+<<fm1>>=
+summary(fm1 <- nls(conc ~ oral1cptSdlkalVlCl(Dose, Time, lV, lka, lCl),
+                   Theoph, start=c(lV=-1, lka=0.5, lCl=-4),
+                   subset=Subject==1), corr=TRUE)
+@ 
+
+\end{document}

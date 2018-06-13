@@ -1,0 +1,5 @@
+coef.optimx             Summarize optimx object
+optimx                  General-purpose optimization
+optimx-package          A replacement and extension of the optim()
+                        function
+summary.optimx          Summarize optimx object

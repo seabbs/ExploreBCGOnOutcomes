@@ -1,0 +1,229 @@
+ATT                     Compute simulated (sample) average treatment
+                        effects on the treated from a Zelig model
+                        estimation
+CigarettesSW            Cigarette Consumption Panel Data
+MatchIt.url             Table of links for Zelig
+Median                  Compute the Statistical Median of a Vector
+Mode                    Compute the Statistical Mode of a Vector
+PErisk                  Political Economic Risk Data from 62 Countries
+                        in 1987
+SupremeCourt            U.S. Supreme Court Vote Matrix
+Weimar                  1932 Weimar election data
+Zelig-ar-class          Time-Series Model with Autoregressive
+                        Disturbance
+Zelig-arima-class       Autoregressive and Moving-Average Models with
+                        Integration for Time-Series Data
+Zelig-bayes-class       Bayes Model object for inheritance across
+                        models in Zelig
+Zelig-binchoice-class   Binary Choice object for inheritance across
+                        models in Zelig
+Zelig-binchoice-gee-class
+                        Object for Binary Choice outcomes in
+                        Generalized Estimating Equations for
+                        inheritance across models in Zelig
+Zelig-binchoice-survey-class
+                        Object for Binary Choice outcomes with Survey
+                        Weights for inheritance across models in Zelig
+Zelig-class             Zelig reference class
+Zelig-exp-class         Exponential Regression for Duration Dependent
+                        Variables
+Zelig-factor-bayes-class
+                        Bayesian Factor Analysis
+Zelig-gamma-class       Gamma Regression for Continuous, Positive
+                        Dependent Variables
+Zelig-gamma-gee-class   Generalized Estimating Equation for Gamma
+                        Regression
+Zelig-gamma-survey-class
+                        Gamma Regression with Survey Weights
+Zelig-gee-class         Generalized Estimating Equations Model object
+                        for inheritance across models in Zelig
+Zelig-glm-class         Generalized Linear Model object for inheritance
+                        across models in Zelig
+Zelig-ivreg-class       Instrumental-Variable Regression
+Zelig-logit-bayes-class
+                        Bayesian Logit Regression
+Zelig-logit-class       Logistic Regression for Dichotomous Dependent
+                        Variables
+Zelig-logit-gee-class   Generalized Estimating Equation for Logit
+                        Regression
+Zelig-logit-survey-class
+                        Logit Regression with Survey Weights
+Zelig-lognorm-class     Log-Normal Regression for Duration Dependent
+                        Variables
+Zelig-ls-class          Least Squares Regression for Continuous
+                        Dependent Variables
+Zelig-ma-class          Time-Series Model with Moving Average
+Zelig-mlogit-bayes-class
+                        Bayesian Multinomial Logistic Regression
+Zelig-negbin-class      Negative Binomial Regression for Event Count
+                        Dependent Variables
+Zelig-normal-bayes-class
+                        Bayesian Normal Linear Regression
+Zelig-normal-class      Normal Regression for Continuous Dependent
+                        Variables
+Zelig-normal-gee-class
+                        Generalized Estimating Equation for Normal
+                        Regression
+Zelig-normal-survey-class
+                        Normal Regression for Continuous Dependent
+                        Variables with Survey Weights
+Zelig-oprobit-bayes-class
+                        Bayesian Ordered Probit Regression
+Zelig-poisson-bayes-class
+                        Bayesian Poisson Regression
+Zelig-poisson-class     Poisson Regression for Event Count Dependent
+                        Variables
+Zelig-poisson-gee-class
+                        Generalized Estimating Equation for Poisson
+                        Regression
+Zelig-poisson-survey-class
+                        Poisson Regression with Survey Weights
+Zelig-probit-bayes-class
+                        Bayesian Probit Regression
+Zelig-probit-class      Probit Regression for Dichotomous Dependent
+                        Variables
+Zelig-probit-gee-class
+                        Generalized Estimating Equation for Probit
+                        Regression
+Zelig-probit-survey-class
+                        Probit Regression with Survey Weights
+Zelig-quantile-class    Quantile Regression for Continuous Dependent
+                        Variables
+Zelig-relogit-class     Rare Events Logistic Regression for Dichotomous
+                        Dependent Variables
+Zelig-survey-class      Survey models in Zelig for weights for complex
+                        sampling designs
+Zelig-timeseries-class
+                        Time-series models in Zelig
+Zelig-tobit-bayes-class
+                        Bayesian Tobit Regression
+Zelig-tobit-class       Linear Regression for a Left-Censored Dependent
+                        Variable
+Zelig-weibull-class     Weibull Regression for Duration Dependent
+                        Variables
+Zelig.url               Table of links for Zelig
+approval                U.S. Presidential Approval Data
+avg                     Compute central tendancy as approrpriate to
+                        data type
+bivariate               Sample data for bivariate probit regression
+ci.plot                 Method for plotting qi simulations across a
+                        range within a variable, with confidence
+                        intervals
+cluster.formula         Generate Formulae that Consider Clustering
+coalition               Coalition Dissolution in Parliamentary
+                        Democracies
+coalition2              Coalition Dissolution in Parliamentary
+                        Democracies, Modified Version
+coef,Zelig-method       Method for extracting estimated coefficients
+                        from Zelig objects
+coefficients,Zelig-method
+                        Method for extracting estimated coefficients
+                        from Zelig objects
+combine_coef_se         Combines estimated coefficients and associated
+                        statistics from models estimated with multiply
+                        imputed data sets or bootstrapped
+createJSON              Utility function for constructing JSON file
+                        that encodes the hierarchy of available
+                        statistical models in Zelig
+df.residual,Zelig-method
+                        Method for extracting residual
+                        degrees-of-freedom from Zelig objects
+eidat                   Simulation Data for Ecological Inference
+fitted,Zelig-method     Method for extracting estimated fitted values
+                        from Zelig objects
+free1                   Freedom of Speech Data
+free2                   Freedom of Speech Data
+friendship              Simulated Example of Schoolchildren Friendship
+                        Network
+from_zelig_model        Extract the original fitted model object from a
+                        'zelig' estimation
+get_pvalue              Extract p-values from a Zelig estimated model
+get_qi                  Extract quantities of interest from a Zelig
+                        simulation
+get_se                  Extract standard errors from a Zelig estimated
+                        model
+grunfeld                Simulation Data for model Seemingly Unrelated
+                        Regression (sur) that corresponds to method SUR
+                        of systemfit
+hoff                    Social Security Expenditure Data
+homerun                 Sample Data on Home Runs Hit By Mark McGwire
+                        and Sammy Sosa in 1998.
+immigration             Individual Preferences Over Immigration Policy
+is_length_not_1         Check if an object has a length greater than 1
+is_sims_present         Check if any simulations are present in sim.out
+is_simsrange            Check if simulations for a range of fitted
+                        values are present in sim.out
+is_simsrange1           Check if simulations for a range1 of fitted
+                        values are present in sim.out
+is_simsx                Check if simulations for individual values are
+                        present in sim.out
+is_simsx1               Check if simulations for individual values for
+                        x1 are present in sim.out
+is_timeseries           Check if a zelig object contains a time series
+                        model
+is_uninitializedField   Check if uninitializedField
+is_varying              Check if the values in a vector vary
+is_zelig                Check if is a zelig object
+is_zeligei              Check if an object was created with ZeligEI
+klein                   Simulation Data for model Two-Stage Least
+                        Square (twosls) that corresponds to method 2SLS
+                        of systemfit
+kmenta                  Simulation Data for model Three-Stage Least
+                        Square (threesls) that corresponds to method
+                        3SLS of systemfit
+macro                   Macroeconomic Data
+mexico                  Voting Data from the 1988 Mexican Presidental
+                        Election
+mi                      Enables backwards compatability for preparing
+                        non-amelia imputed data sets for 'zelig'.
+mid                     Militarized Interstate Disputes
+model_lookup_df         Instructions for how to convert non-Zelig
+                        fitted model objects to Zelig. Used in to_zelig
+names,Zelig-method      Names method for Zelig objects
+newpainters             The Discretized Painter's Data of de Piles
+or_summary              Find odds ratios for coefficients and standard
+                        errors for glm.summary class objects
+plot,Zelig,ANY-method   Plot method for Zelig objects
+predict,Zelig-method    Method for getting predicted values from Zelig
+                        objects
+qi.plot                 Default Plot Design For Zelig Model QI's
+qi_slimmer              Find the median and a central interval of
+                        simulated quantity of interest distributions
+residuals,Zelig-method
+                        Method for extracting residuals from Zelig
+                        objects
+rocplot                 Receiver Operator Characteristic Plots
+sanction                Multilateral Economic Sanctions
+seatshare               Left Party Seat Share in 11 OECD Countries
+setx                    Setting Explanatory Variable Values
+setx1                   Setting Explanatory Variable Values for First
+                        Differences
+sim                     Generic Method for Computing and Organizing
+                        Simulated Quantities of Interest
+simulations.plot        Plot Quantities of Interest in a Zelig-fashion
+sna.ex                  Simulated Example of Social Network Data
+summary,Zelig-method    Summary method for Zelig objects
+summary.Arima           Summary of an object of class Arima
+swiss                   Swiss Fertility and Socioeconomic Indicators
+                        (1888) Data
+table.levels            Create a table, but ensure that the correct
+                        columns exist. In particular, this allows for
+                        entires with zero as a value, which is not the
+                        default for standard tables
+to_zelig                Coerce a non-Zelig fitted model object to a
+                        Zelig class object
+to_zelig_mi             Bundle Multiply Imputed Data Sets into an
+                        Object for Zelig
+tobin                   Tobin's Tobit Data
+turnout                 Turnout Data Set from the National Election
+                        Survey
+vcov,Zelig-method       Variance-covariance method for Zelig objects
+vcov_gee                Find vcov for GEE models
+vcov_rq                 Find vcov for quantile regression models
+voteincome              Sample Turnout and Demographic Data from the
+                        2000 Current Population Survey
+zelig                   Estimating a Statistical Model
+zelig_qi_to_df          Extract simulated quantities of interest from a
+                        zelig object
+zelig_setx_to_df        Extracted fitted values from a Zelig object
+                        with 'setx' values

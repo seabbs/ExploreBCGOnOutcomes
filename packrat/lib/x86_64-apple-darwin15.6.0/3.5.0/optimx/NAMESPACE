@@ -1,0 +1,23 @@
+import(
+  "numDeriv",
+  "ucminf",
+  "BB",
+  "Rcgmin",
+  "Rvmmin",
+  "minqa",
+  "setRNG",
+  "dfoptim",
+  "svUnit"
+)
+
+export(
+  "optimx",
+  "coef<-"
+)
+S3method("[", "optimx")
+S3method("as.data.frame", "optimx")
+S3method("coef", "optimx")
+S3method("coef<-", "optimx")
+S3method("summary", "optimx")
+
+

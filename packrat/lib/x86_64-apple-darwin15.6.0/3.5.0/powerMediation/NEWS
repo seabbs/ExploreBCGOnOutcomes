@@ -1,0 +1,149 @@
+v0.2.9 (powerMediation) Feb. 7, 2018
+#  (1) refine the online manual for 'sizePoisson' and 'powerPoisson': the sample size is the total sample size
+#
+v0.2.8 (powerMediation) Sept. 8, 2017
+  (1) Through discussion with Dr. Florence Gillaizeau <florence.gillaizeau@mxns.com>, we found
+the power calculation in sizePoisson() is for two-sided test.
+  (2) clarify notations in online manual
+  (3) revise note section to illustrate how to obtain power for
+one-sided tests
+
+v0.2.7 (powerMediation) Feb. 15, 2017
+  (1) Dr. Kimberly Henry <Kim.Henry@colostate.edu> told that typo in the
+documentaion for the 'powerLongFull', 'ssLongFull' function:
+  sigma1 and sigma2 are standard deviations, not variances
+
+v0.2.6 (powerMediation) Jan. 25, 2017
+  (1) Dr. Chih Ping Chou <cchou@usc.edu> pointed out that "the rho2.mx parameter is totally determined by theta1.a, sigma.x and sigma.m" in Sobel's method.
+So in version 0.2.6, 'rho2.mx' is dropped from the input list.
+
+v0.2.5 (powerMediation) June 1, 2015
+  (1) figured out the answer for question proposed by Dr. George D. Papandonatos in version 0.0.8:
+'sigma.m is not a free parameter'.
+    Acutually 'sigma.m' is a free parameter. Note that the input 'sigma.epsilon' is not the same
+as 'sigma.e'.
+
+ Thanks Dr. Ming Ji (mji@health.usf.edu) for letting me know that I did not answer Dr. Papandonatos's question yet.
+
+  (2) Dr. George D. Papandonatos asked another question:
+----------
+Dear Weiliang,
+
+one other question: 
+
+in the documentation for minEffect.SLR you require sigma.y as the input,  but you fail to define it. 
+Is it the conditional variance of y given x? If so, why not call it sigma.e so as to avoid confusion?
+Same for other functions related to SLR.
+
+Thanks, 
+----------
+
+Answer: 
+-----------
+Dear George,
+sigma.y is the marginal standard deviation of y, sd(y), not the conditional sd sd(y|x). Please find the attached reference paper Dupont and Plummer 1998. 
+
+I will revise the definition of sigma.y in the next release of powerMediation. Thanks for pointing out this ambiguity! 
+
+Best regards,
+
+Weiliang
+-----------
+
+v0.2.4 (powerMediation) May. 7, 2015
+  (1) add functions 'sizePoission' and 'powerPoisson'
+      for simple Poisson regression
+  (2) make notation consistent in online document for the functions
+      'powerMediation.Sobel' and 'ssMediation.Sobel'
+v0.2.1 (powerMediation) Feb. 20, 2015
+  (1) add documents for functions: 'powerInteract' 
+      'powerLong.multiTime', and 'ssLong.multiTime'
+  (2) fixed 1 bug in calculating 'powerLong.multiTime':
+        should use qnorm(1-alpha), not qnorm(1-alpha/2)
+  (3) output round up sample size per group
+
+v0.2.0 (powerMediation) Jan. 07, 2015
+  (1) Dr. ToRe Wentzel-Larsen (tore.wentzellarsen@gmail.com) kindly pointed out that the interpretation of OR in the functions 'powerLogisticCon'
+and 'SSizeLogisticCon.Rd' is not correct. The followings are his e-mail
+on Jan 2, 2015. Based on Dr. ToRe Wentzel-Larsen's suggestion, I added one
+phase '\eqn{\log(OR)} is the change in log odds for an increase of one unit in \eqn{X}.' to the interpretation of OR.
+------------------------------
+Dear Weiliang Qiu,
+The formula in the documentation for this function is the same as formula (1) in the cited article by Hsieh et. al. (with beta^star written as log of the OR) However, in formula (1) in the article beta^star is not simply a regression coefficient under the alternative hypothesis, but a standardized effect size, see e. g. Appendix 1 and the Example in the article. This means that the OR has to be stated per a one standard deviation difference in the continuous independent variable in question. Perhaps that could be explicitly stated in the documentation for powerLogisticCon, since if not some users may erroneously use powerLogisticCon with the OR per one unit difference of the independent variable (although it is fairly obvious that some standardization is needed in powerLogisticCon, if not the computed power will differ as to whether the independent variable is measured in e. g. USD or 1000 USD).   
+Best regards, ToRe Wentzel-Larsen
+---------------------------------- 
+
+v0.1.9 (powerMediation) Dec. 06, 2013
+  (1) added functions 'powerLong.multiTime' and 'ssLong.multiTime'
+v0.1.8 (powerMediation) Dec. 04, 2013
+  (1) added function 'powerInteract'
+
+v0.1.7 (powerMediation) Nov. 08, 2013
+  (1) fixed a 'NOTE': line too widths in some Rd file e.g. 'ss.SLR.Rd'
+v0.1.6 (powerMediation) Nov. 08, 2013
+  (1) submit to CRAN
+v0.1.5 (powerMediation) April 30, 2013
+  (1) add functions 'ssLong', 'ssLongFull', 'powerLong', 'powerLongFull' to calculate sample size or power for
+      longitudinal study with 2 time points
+v0.1.4 (powerMediation) April 29, 2013
+  (1) fixed one bug in the files 'powerLogisticBin.Rd' and 'powerLogisticCon.Rd': the 'value' slot should be 'Estimated power'
+  (2) fixed one bug in files 'powerLogisticBin.Rd', 'powerLogisticCon.Rd',
+'SSizeLogisticBin.Rd', and 'SSizeLogisticCon.Rd': Zu should be 'u-th percentile', not 'upper u-th percentile'.
+This is a typo in the file 'http://personal.health.usf.edu/ywu/logistic.pdf'
+  (3) change the title in DESCRIPTION to "Power/Sample size calculation for mediation analysis, simple linear
+regression, and logistic regression"
+
+v0.1.3 (powerMediation) April 29, 2013
+  (1) fixed 2 typos in DESCRIPTION file: 'continous' should be 'continuous';
+'poisson' should be 'Poisson'
+v0.1.2 (powerMediation) April 29, 2013
+  (1) the same as v0.1.1 (failed to upload v0.1.1 and need a new version to
+upload it again to CRAN)
+v0.1.1 (powerMediation) April 26, 2013
+  (1) add functions 'powerLogistic.OR' and 'SSizeLogistic.OR' to calculate
+      power and sample size for logistic regression
+v0.1.0 (powerMediation) Nov. 28, 2012
+  (1) fixed 2 bugs in the file: power_VSMc_linear.R 
+v0.0.9 (powerMediation)
+  (1) fix a typo in man file for 'powerMediation.Sobel'
+
+v0.0.8 (powerMediation)
+  (1) Dr. George D. Papandonatos (gdp@stat.brown.edu)
+      sent an e-mail to me today and kindly mentioned a few improvements
+      for power calculation for Sobel test:
+
+#############################################
+Dear Weiliang,
+
+your help file for deriving the power of the Soble test allows
+users to enter sigma.m, sigma.x, theta.1a, and sigma.e as free
+parameters. However,
+
+sigma.m^2 = theta.1a^2*sigma.x^2+sigma.e^2
+
+so that sigma.m is not a free parameter. Indeed, in the example
+given in your documentation, it appears that
+
+sigma.m = sqrt( .1701^2*.57^2+.20^2) = 0.22
+
+which conflicts with the 0.612 value assigned to this parameter.
+I belive that you should not have sigma.m as an argument to this
+function.
+
+Further, the documentation refers to sigma.m, sigma.x as variances,
+whereas your code suggests they are standard deviations.
+
+Also, you refer to sigma.theta and sigma.lambda as standard deviations,
+whereas the formulae given suggest that they are variances.
+
+#############################################
+
+
+v0.0.7 (powerMediation)
+  (1) fixed a bug in calculating sample size/power for mediation effect
+      based on Vittinghoff, Sen and McCulloch's (2009) method: corr.xm
+      should be corr.xm^2 in the formula
+  (2) fixed a bug in citing author names in R code or man file: the author 'Sen' was accidentally dropped.
+  (3) added sample size/power calculation for logistic, poisson, and cox regression based on Vittinghoff, Sen and McCulloch's (2009) method. Thanks for Dr. Rui Wang who pointed out the sample size/power calculation formula for these 3 addition models in Vittinghoff, Sen and McCulloch (2009) and encouraged me to implement them. She even sent to me an sample R code for sample size calculation for logistic regression  for testing mediation effect.
+  (4) replaced the examples in functions based on Vittinghoff, Sen and McCulloch's (2009) method
+

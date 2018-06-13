@@ -1,0 +1,11 @@
+CALIBERrfimpute-package
+                        Imputation in MICE using Random Forest
+makemar                 Creates artificial missing at random
+                        missingness
+mice.impute.rfcat       Impute categorical variables using Random
+                        Forest within MICE
+mice.impute.rfcont      Impute continuous variables using Random Forest
+                        within MICE
+setRFoptions            Set Random Forest options for imputation using
+                        MICE
+simdata                 Simulate multivariate data for testing

@@ -1,0 +1,23 @@
+AmeliaView              Interactive GUI for Amelia
+africa                  Economic and Political Indictors in 6 African
+                        States
+amelia                  AMELIA: Multiple Imputation of Incomplete
+                        Multivariate Data
+amelia-package          Amelia II: A Program for Missing Data
+ameliabind              Combine multiple runs of Amelia
+combine.output          Combine Multiple Amelia Output Lists
+compare.density         Compare observed versus imputed densities
+disperse                Overdispersed starting values diagnostic for
+                        multiple imputation
+freetrade               Trade Policy and Democracy in 9 Asian States
+mi.meld                 Combine Multiple Results From Multiply Imputed
+                        Datasets
+missmap                 Missingness Map
+moPrep                  Prepare Multiple Overimputation Settings
+overimpute              Overimputation diagnostic plot
+plot.amelia             Summary plots for Amelia objects
+summary.amelia          Summary of an Amelia object
+transform.amelia        Transform imputed datasets from Amelia objects
+tscsPlot                Plot observed and imputed time-series for a
+                        single cross-section
+write.amelia            Write Amelia imputations to file

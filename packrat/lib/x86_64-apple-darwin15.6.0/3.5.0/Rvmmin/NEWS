@@ -1,0 +1,72 @@
+Changes in Rvmmin
+
+Changes before 2012-4-30 not recorded 
+
+TODOS
+   o    Saving of final Hessian approx as in Rvmminx
+
+   o    Eventual incorporation of line searches, possibly in a
+        separate routine
+
+2017-11-25
+   o    Tidy tests
+   o    Some cleanup of vignette
+
+2017-7-18
+   o    Simplify example
+   o    Added tests
+
+2016-11-30
+   o    Vignette added (incomplete)
+
+2015-11-30
+   o    Changed control "stopbadupdate" to TRUE from FALSE.
+
+2015-06-03
+   o    Had "lower" instead of "upper" in one of the bounds checks.
+        Fixed.
+
+2015-05-03
+   o    Check gradient count ig > 2 when doing convergence test.
+	Possible failure for test fn = sum(x*x) noted. However, 
+	other fns fail with this change. This is an issue in the
+	program logic rather than an algorithmic failure. 
+
+2015-01-07
+
+   o    comments in codes Rvmminb.R and Rvmminu.R aligned so that the
+        differences between bounds constrained version and unconstrained
+        more easily visualized
+        
+   o    control keepinputpar explained. It is used when user does NOT want
+        out-of-bounds parameters on input moved to nearest bound. Program
+        will stop in this case.
+        
+   o    Minor changes to maxit and maxfeval defaults so that they are 
+        increased with increasing numbers of parameters.
+
+2014-12-21 
+
+   o    As per CRAN policies, edited DESCRIPTION and NAMESPACE files. 
+	Because there is no change to code, the date of the package 
+	advanced by only 1 day.
+
+2013-10-27 
+   
+   o    Added maxfevals to control. (It had been there some time.)
+
+2013-8-19
+
+   o    Numerical gradient from optextras, remove bmchk from package,
+	put bmchk call in Rvmmin, not Rvmminb
+
+2013-7-20
+   o    Minor improvements to timing by use of crossprod() in 
+        computing y and D2
+
+2012-7-9
+   o    Removed optansout to avoid conflicts with optplus/optimx
+
+2012-5-21
+   o	Separation of constrained and unconstrained versions.
+

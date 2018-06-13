@@ -1,0 +1,20 @@
+export(
+  "optsp",
+  "axsearch",
+  "fnchk",
+  "grback",
+  "grcentral",
+  "grchk",
+  "grfwd",
+  "hesschk", 
+  "kktchk",
+  "gHgen",
+  "gHgenb",
+  "bmchk",
+  "bmstep",
+  "scalechk",
+  "grnd"
+)
+ importFrom("utils", "str")
+ importFrom("numDeriv", "grad", "hessian", "jacobian")
+

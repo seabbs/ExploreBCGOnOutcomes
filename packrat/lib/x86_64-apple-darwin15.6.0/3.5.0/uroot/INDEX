@@ -1,0 +1,13 @@
+bgt.data                BGT-data Sample Data Set
+ch.data                 CH-data Sample Data Set
+ch.rs.pvalue            P-values for the CH test statistic
+ch.test                 Canova and Hansen Test for Seasonal Stability
+hegy.boot.pval          Bootstrapped P-Values for the HEGY Test
+                        Statistics
+hegy.rs.pvalue          P-values based on response surface regressions
+                        for the HEGY test statistics
+hegy.test               Hylleberg, Engle, Granger and Yoo Test for
+                        Seasonal Unit Roots
+seasonal.dummies        Seasonal Dummies and Seasonal Cycles
+uroot-package           Unit Root Tests for Seasonal Time Series
+uroot.raw.pvalue        Original Tables of Critical Values
