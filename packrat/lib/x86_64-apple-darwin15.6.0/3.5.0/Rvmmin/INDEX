@@ -1,6 +1,0 @@
-Rvmmin                  Variable metric nonlinear function
-                        minimization, driver.
-Rvmminb                 Variable metric nonlinear function minimization
-                        with bounds constraints
-Rvmminu                 Variable metric nonlinear function
-                        minimization, unconstrained

@@ -49,7 +49,7 @@ The repository is structured as follows:
 
 ### Manual install
 
-- Intall R and Rstudio.
+- Intall R (analysis run with `3.5.0`) and Rstudio.
 
 - Download the analysis folder from [https://github.com/seabbs/ExploreBCGOnOutcomes/archive/master.zip](https://github.com/seabbs/ExploreBCGOnOutcomes/archive/master.zip) or use `git clone`, as follows, in the command line (not the R terminal).
 
@@ -59,12 +59,10 @@ git clone https://github.com/seabbs/ExploreBCGOnOutcomes.git
 
 - Once this has been downloaded click on the project file (`ExploreBCGOnOutcomes.Rproj`).
 
-- Install the required packages using `packrat` as follows.
+- Install the required packages using the following script. Versioned to "2018-06-19".
 
 ```{r get-packages, eval = FALSE}
-install.packages("packrat")
-packrat::restore()
-
+source("scripts/packages.R")
 ```
 
 - Load the analysis results by running `output/Paper.Rmd`. This complete analysis is not reproducible as the raw data cannot be published, however all interim results are stored in the repository and these can be explored. The sensitivity analysis results can be reproduced by setting variables in this document, as explained at the top of the script.

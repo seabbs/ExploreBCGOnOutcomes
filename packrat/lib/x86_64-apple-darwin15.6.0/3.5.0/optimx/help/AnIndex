@@ -1,8 +1,0 @@
-optimx-package	optimx-package
-as.data.frame.optimx	optimx
-coef.optimx	coef.optimx
-coef<-	coef.optimx
-coef<-.optimx	coef.optimx
-optimx	optimx
-summary.optimx	summary.optimx
-[.optimx	optimx

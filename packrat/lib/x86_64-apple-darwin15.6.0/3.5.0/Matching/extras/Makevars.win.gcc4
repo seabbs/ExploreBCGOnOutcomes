@@ -1,3 +1,0 @@
-PKG_CFLAGS = -O3 -finline-functions -funswitch-loops -fgcse-after-reload -funroll-loops 
-PKG_CXXFLAGS = -O3 -finline-functions -funswitch-loops -fgcse-after-reload -funroll-loops -ffriend-injection
-PKG_LIBS = -lRblas

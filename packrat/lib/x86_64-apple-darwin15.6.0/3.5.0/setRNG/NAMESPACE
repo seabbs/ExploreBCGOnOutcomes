@@ -1,4 +1,0 @@
-export("setRNG")
-export("random.number.test")
-export("getRNG")
-S3method("getRNG","default")

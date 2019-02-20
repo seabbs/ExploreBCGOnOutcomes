@@ -18,4 +18,4 @@ ADD . /home/rstudio/ExploreBCGOnOutcomes
 
 WORKDIR /home/rstudio/ExploreBCGOnOutcomes
 
-Run Rscript -e "source('.Rprofile')"
+Run Rscript -e 'source("scripts/packages.R")'
