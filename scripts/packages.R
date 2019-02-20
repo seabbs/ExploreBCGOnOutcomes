@@ -3,7 +3,7 @@ package_names <- c('tidyverse', 'splines', 'devtools', 'parallel',
                    'pryr', 'cowplot', 'reshape2', 'knitr', 'lme4', 'plotly',
                    'powerMediation', 'compiler', 'pander', 'mice', 'pomp', 
                    'bookdown', 'matrixStats', 'haven', 'lattice', 'stringr',
-                   'forcats', 'epiR')
+                   'forcats', 'epiR', 'rmarkdown')
 
 pkgLoad <- function(x)
 {
@@ -17,7 +17,7 @@ pkgLoad <- function(x)
 
 ## Set up checkpoint versioning
 pkgLoad("checkpoint")
-checkpoint("2018-06-19")
+checkpoint("2018-06-19", scanForPackages = TRUE)
 
 ## Install/Load all other packages
 pck <- lapply(package_names, pkgLoad)

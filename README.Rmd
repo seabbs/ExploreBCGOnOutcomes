@@ -59,7 +59,7 @@ git clone https://github.com/seabbs/ExploreBCGOnOutcomes.git
 
 - Once this has been downloaded click on the project file (`ExploreBCGOnOutcomes.Rproj`).
 
-- Install the required packages using the following script. Versioned to "2018-06-19".
+- Install the required packages using the following script. Versioned to "2018-06-19" using the `checkpoint` package.
 
 ```{r get-packages, eval = FALSE}
 source("scripts/packages.R")
@@ -69,7 +69,7 @@ source("scripts/packages.R")
 
 ### Docker
 
-This analysis can be run in a docker container based on the tidyverse docker image. To run the docker image run:
+To ensure full reproducibility, this analysis can be run in a docker container based on the tidyverse docker image. To run the docker image run:
 
 ```{bash, eval = FALSE}
 docker run -d -p 8787:8787 --name ExploreBCGOnOutcome -e USER=ExploreBCGOnOutcome -e PASSWORD=ExploreBCGOnOutcome seabbs/explorebcgonoutcome

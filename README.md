@@ -1,110 +1,69 @@
 
-# Exploring the effects of BCG vaccination in patients diagnosed with tuberculosis: observational study using the Enhanced Tuberculosis Surveillance system
+Exploring the effects of BCG vaccination in patients diagnosed with tuberculosis: observational study using the Enhanced Tuberculosis Surveillance system
+=========================================================================================================================================================
 
-[![Paper](https://img.shields.io/badge/Paper-10.1101/366476-lightgrey.svg)](https://doi.org/10.1101/366476)
-[![DOI](https://zenodo.org/badge/127124135.svg)](https://zenodo.org/badge/latestdoi/127124135)
+[![Paper](https://img.shields.io/badge/Paper-10.1101/366476-lightgrey.svg)](https://doi.org/10.1101/366476) [![DOI](https://zenodo.org/badge/127124135.svg)](https://zenodo.org/badge/latestdoi/127124135)
 
-## Abstract
+Abstract
+--------
 
 ### Background
 
-Bacillus Calmette–Guérin (BCG) is one of the most widely-used vaccines
-worldwide. BCG primarily reduces the progression from infection to
-disease, however there is evidence that BCG may provide additional
-benefits. We aimed to investigate whether there is evidence in
-routinely-collected surveillance data that BCG vaccination impacts
-outcomes for tuberculosis (TB) cases in England.
+Bacillus Calmette–Guérin (BCG) is one of the most widely-used vaccines worldwide. BCG primarily reduces the progression from infection to disease, however there is evidence that BCG may provide additional benefits. We aimed to investigate whether there is evidence in routinely-collected surveillance data that BCG vaccination impacts outcomes for tuberculosis (TB) cases in England.
 
 ### Methods
 
-We obtained all TB notifications for 2009-2015 in England from the
-Enhanced Tuberculosis surveillance system. We considered five outcomes:
-All-cause mortality, death due to TB (in those who died), recurrent TB,
-pulmonary disease, and sputum smear status. We used logistic regression,
-with complete case analysis, to investigate each outcome with BCG
-vaccination, years since vaccination and age at vaccination, adjusting
-for potential confounders. All analyses were repeated using multiply
-imputed data.
+We obtained all TB notifications for 2009-2015 in England from the Enhanced Tuberculosis surveillance system. We considered five outcomes: All-cause mortality, death due to TB (in those who died), recurrent TB, pulmonary disease, and sputum smear status. We used logistic regression, with complete case analysis, to investigate each outcome with BCG vaccination, years since vaccination and age at vaccination, adjusting for potential confounders. All analyses were repeated using multiply imputed data.
 
 ### Results
 
-We found evidence of an association between BCG vaccination and reduced
-all-cause mortality (aOR:0.76 (95%CI 0.64 to 0.89), P:0.001) and weak
-evidence of an association with reduced recurrent TB (aOR:0.90 (95%CI
-0.81 to 1.00), P:0.056). Analyses using multiple imputation suggested
-that the benefits of vaccination for all-cause mortality were reduced
-after 10 years.
+We found evidence of an association between BCG vaccination and reduced all-cause mortality (aOR:0.76 (95%CI 0.64 to 0.89), P:0.001) and weak evidence of an association with reduced recurrent TB (aOR:0.90 (95%CI 0.81 to 1.00), P:0.056). Analyses using multiple imputation suggested that the benefits of vaccination for all-cause mortality were reduced after 10 years.
 
 ### Conclusions
 
-We found that BCG vaccination was associated with reduced all-cause
-mortality in people with TB although this benefit was less pronounced
-more than 10 years after vaccination. There was weak evidence of an
-association with reduced recurrent TB.
+We found that BCG vaccination was associated with reduced all-cause mortality in people with TB although this benefit was less pronounced more than 10 years after vaccination. There was weak evidence of an association with reduced recurrent TB.
 
-## Repository structure
+Repository structure
+--------------------
 
 The repository is structured as follows:
 
-  - **output** Finalised paper, cover letter and checklists.
-  - **functions:** Functions for analysis, and document structure.
-    Grouped into scripts by use case.
-  - **common:** Formatting styles that are common to multiple documents,
-    reference library etc.
-  - **sensitivity:** Various sensitivity analysis.
-  - **data**: Analysis output and summarised results. The raw data used
-    for this analysis cannot be made public but see
-    [here](https://www.samabbott.co.uk/tbinenglanddataclean/) for
-    details of the extract and cleaning script used.
-  - **packrat:** R packages used for the analysis.
+-   **output** Finalised paper, cover letter and checklists.
+-   **functions:** Functions for analysis, and document structure. Grouped into scripts by use case.
+-   **common:** Formatting styles that are common to multiple documents, reference library etc.
+-   **sensitivity:** Various sensitivity analysis.
+-   **data**: Analysis output and summarised results. The raw data used for this analysis cannot be made public but see [here](https://www.samabbott.co.uk/tbinenglanddataclean/) for details of the extract and cleaning script used.
+-   **packrat:** R packages used for the analysis.
 
-## Reproducing this research
+Reproducing this research
+-------------------------
 
 ### Manual install
 
-  - Intall R and Rstudio.
+-   Intall R (analysis run with `3.5.0`) and Rstudio.
 
-  - Download the analysis folder from
-    <https://github.com/seabbs/ExploreBCGOnOutcomes/archive/master.zip>
-    or use `git clone`, as follows, in the command line (not the R
-    terminal).
-
-<!-- end list -->
+-   Download the analysis folder from <https://github.com/seabbs/ExploreBCGOnOutcomes/archive/master.zip> or use `git clone`, as follows, in the command line (not the R terminal).
 
 ``` bash
 git clone https://github.com/seabbs/ExploreBCGOnOutcomes.git
 ```
 
-  - Once this has been downloaded click on the project file
-    (`ExploreBCGOnOutcomes.Rproj`).
+-   Once this has been downloaded click on the project file (`ExploreBCGOnOutcomes.Rproj`).
 
-  - Install the required packages using `packrat` as follows.
-
-<!-- end list -->
+-   Install the required packages using the following script. Versioned to "2018-06-19" using the `checkpoint` package.
 
 ``` r
-install.packages("packrat")
-packrat::restore()
+source("scripts/packages.R")
 ```
 
-  - Load the analysis results by running `output/Paper.Rmd`. This
-    complete analysis is not reproducible as the raw data cannot be
-    published, however all interim results are stored in the repository
-    and these can be explored. The sensitivity analysis results can be
-    reproduced by setting variables in this document, as explained at
-    the top of the script.
+-   Load the analysis results by running `output/Paper.Rmd`. This complete analysis is not reproducible as the raw data cannot be published, however all interim results are stored in the repository and these can be explored. The sensitivity analysis results can be reproduced by setting variables in this document, as explained at the top of the script.
 
 ### Docker
 
-This analysis can be run in a docker container based on the tidyverse
-docker image. To run the docker image
-run:
+To ensure full reproducibility, this analysis can be run in a docker container based on the tidyverse docker image. To run the docker image run:
 
 ``` bash
 docker run -d -p 8787:8787 --name ExploreBCGOnOutcome -e USER=ExploreBCGOnOutcome -e PASSWORD=ExploreBCGOnOutcome seabbs/explorebcgonoutcome
 ```
 
-The rstudio client can be found on port :8787 at your local machines ip.
-The default username:password is
-ExploreBCGOnOutcome:ExploreBCGOnOutcome, set the user with -e
-USER=username, and the password with - e PASSWORD=newpasswordhere.
+The rstudio client can be found on port :8787 at your local machines ip. The default username:password is ExploreBCGOnOutcome:ExploreBCGOnOutcome, set the user with -e USER=username, and the password with - e PASSWORD=newpasswordhere.
