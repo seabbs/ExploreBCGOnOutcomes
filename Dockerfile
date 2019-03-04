@@ -18,6 +18,6 @@ ADD . /home/rstudio/ExploreBCGOnOutcomes
 
 WORKDIR /home/rstudio/ExploreBCGOnOutcomes
 
-RUN mkdir ./.checkpoint/.checkpoint
+RUN mkdir -p .checkpoint/.checkpoint
 
 Run Rscript -e 'source("scripts/packages.R")'
