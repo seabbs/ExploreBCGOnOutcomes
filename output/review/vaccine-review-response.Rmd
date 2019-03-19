@@ -12,7 +12,7 @@ Dear Dr. Orenstein,
 
 Thank you for sending review reports for our manuscript. The reviewer’s comments were useful, and have improved the paper.
 
-We enclose a revised version of the manuscript (clean and with tracked changes), which addreses the reviewer’s comments and suggestions. The reviewer’s comments are shown below with our response to each comment in italics.
+We enclose a revised version of the manuscript (clean and with tracked changes), which addresses the reviewer’s comments and suggestions. The reviewer’s comments are shown below with our response to each comment in italics.
 
 Yours sincerely,
 
@@ -23,7 +23,7 @@ Sam Abbott
 ### Summary 
 
 The manuscript "Exploring the effects of BCG vaccination in patients diagnosed with tuberculosis: observational study using the Enhanced Tuberculosis Surveillance system" by Abbott et al. is a retrospective analysis that examines the association between prior BCG vaccination and all-cause mortality and TB-related mortality in reported TB cases in England. Although BCG has been shown to reduce the incidence of TB disease and disease severity in children, there is less data as to its effect on mortality and data on the length of protection are mixed. In this study, prior BCG vaccination was associated with lower all-cause and TB-related mortality (though the latter did not reach statistical significance) in patients diagnosed with TB. While these findings are interesting, I think there are significant methodologic concerns. The data set used has a very large amount of missing data that has high potential to introduce bias into the results. About 1/3 
-of people studied had unknown BCG vaccination status and those with unknown vaccination status had much higher mortality than people in whom vaccination status was known (11% vs 3%). Of those that died and had known vaccination status, a further 38% of people did not have a known cause of death. Because this study only analyzed cases with complete data, conclusions are based on a subset of TB cases that may not be representative of the population as a whole. 
+of people studied had unknown BCG vaccination status and those with unknown vaccination status had much higher mortality than people in whom vaccination status was known (11% vs 3%). Of those that died and had known vaccination status, a further 38% of people did not have a known cause of death. Because this study only analysed cases with complete data, conclusions are based on a subset of TB cases that may not be representative of the population as a whole. 
 
 *Thank you for your detailed comments on our manuscript. We have addressed your concerns below.*
 
@@ -35,7 +35,7 @@ of people studied had unknown BCG vaccination status and those with unknown vacc
 
 It would be more helpful if this section listed exactly what was found in the study and how it contributes to the literature rather than make general statements about what was explored.
 
-*We agree that this section should focus on the results from this study. Based on the requirments laid out on the Vaccine help page (https://www.elsevier.com/authors/journal-authors/highlights), we have adapted the final bullet point as follows:*
+*We agree that this section should focus on the results from this study. Based on the requirements laid out on the Vaccine help page (https://www.elsevier.com/authors/journal-authors/highlights), we have adapted the final bullet point as follows:*
 
 *There was weak evidence of associations between TB outcomes and age at, or years since, vaccination.*
 
@@ -43,15 +43,15 @@ It would be more helpful if this section listed exactly what was found in the st
 
 I suggest the introduction section discuss in more precise terms exactly what is known about the efficacy of BCG vaccination and what questions remain unanswered that this study is trying to address. 
 
-*We acknowledge that information known about the efficacy of BCG vaccination is important to include as context for our study. We did not give precise estimates for the efficacy of the BCG vaccine as efficacy has been shown to be context specific. However, we updated paragraph two of the introduction to explicitly state that the BCG vaccine has been shown to be highly effective in England, and that its effectivness may be correlated with distance from the equator. This now reads as follows.* 
+*We acknowledge that information known about the efficacy of BCG vaccination is important to include as context for our study. We did not give precise estimates for the efficacy of the BCG vaccine as efficacy has been shown to be context specific. However, we updated paragraph two of the introduction to explicitly state that the BCG vaccine has been shown to be highly effective in England, and that its effectiveness may be correlated with distance from the equator. This now reads as follows.* 
 
-  *"BCG’s primary mode of action is to directly prevent the development of active, symptomatic disease. Its efficacy in adults is context specific, with estimates ranging between 0% and 78%.[3] It has been shown to highly efficacious in England and there is some evidence that efficacy increases with distance from the equator. Efficacy has been shown to be dependent on previous exposure, with unexposed individuals receiving the greatest benefit.[4] Unlike in adults, BCG has consistently been shown to be highly protective against TB and TB meningitis in children.[5,6] For this reason the majority of countries that use BCG vaccinate at birth.[7,8]"*
+  *"BCG’s primary mode of action is to directly prevent the development of active, symptomatic disease. Its efficacy in adults is context specific, with estimates ranging between 0% and 78%.[3] It has been shown to highly efficacious in England and there is some evidence that efficacy increases with distance from the equator. Efficacy has been shown to be dependent on previous exposure, with unexposed individuals receiving the greatest benefit.[4] Unlike in adults, BCG has consistently been shown to be highly protective against TB and TB meningitis in children.[5,6] For this reason the majority of countries that use BCG, vaccinate at birth.[7,8]"*
     
 *The final paragraph of the introduction details which questions remain unanswered - this is included below in response to your next comment.*
 
 There is frequent mention of in the introduction (and throughout this manuscript) of the "additional effects" of BCG aside from reducing the incidence of active TB. However, this term is very imprecise, and it makes it difficult to interpret exactly which additional effects the authors are referring to. There are numerous studies showing BCG has many such additional effects, particularly reducing the development of TB meningitis and disseminated TB in young children. The authors need to more clearly describe which "additional effects" of BCG vaccination are not known and how this study can help us understand them better. 
 
-*We agree that this needed clarifiction. As part of our response to your comment below lines 18-19 we have added an explanation of additional effects in the context of TB outcomes. We feel that the following sentences (page 6, lines 19-23 and page 7, lines 1-3) complete this definition:*
+*We agree that this needed clarification. As part of our response to your comment below lines 18-19 we have added an explanation of additional effects in the context of TB outcomes. We feel that the following sentences (page 6, lines 19-23 and page 7, lines 1-3) complete this definition:*
 
   *"There is some evidence that BCG vaccination induces innate immune responses which may provide non-specific protection,[11] TB patients with BCG scars were found to respond better to treatment with earlier sputum smear conversion,[12] and there is evidence to suggest that BCG vaccination is associated with reduced all-cause neonatal mortality[13,14] and both reduced TB[15] and all-cause[16] mortality in the general population. Given that the immunology behind TB immunity is not well understood these findings suggest that BCG may play a more important role in improving TB outcomes than previously thought."*
 
@@ -59,7 +59,7 @@ There is frequent mention of in the introduction (and throughout this manuscript
 
 The statement on line 7-9 that the emergence of drug-resistant TB has made BCG the best available vaccine needs further justification. I am unaware of any vaccine candidates that have differential vaccine efficacy based on MDR status.
 
-*We agree that this sentance was unclear. We have reworded it to the following:*
+*We agree that this sentence was unclear. We have reworded it to the following:*
 
 *"However, the lack of a more effective vaccine and the emergence of drug-resistant TB strains means that BCG vaccination remains an important tool for reducing TB incidence and mortality rates."*
 
@@ -83,14 +83,14 @@ I would recommend the introduction section end with a clear statement of the stu
 
 A much more detailed discussion is needed to understand how the outcome variables differ from one another and how the information was collected. Specifically, a clearer description of how "all-cause mortality" and "TB-related mortality" were collected is needed. How long were most people followed to assess for all-cause mortality? The table indicates people were "followed for 12, 24, and 36 months (or until treatment completion)". Given patients with drug susceptible TB are usually only treated for 6 months, it seems few people would have been followed for this amount of time. It is also unclear what criteria were used to determine whether the death was due to TB and who made the assessment. 
 
-*We have added futher detail to help differentiate outcomes and reworked the explanation of the approach used to define mortality. We made these changes below at the same time as moving from a table to describing the outcomes in the text.*
+*We have added futher detail to help differentiate  outcomes and reworked the explanation of the approach used to define mortality. We made these changes below at the same time as moving from a table to describing the outcomes in the text.*
 
 There is no information included as to how information about BCG vaccination was collected. Was this entirely by self-report? If so, was there any effort made to ensure the information provided was accurate (e.g. cross-referencing vaccination records), particularly the age at vaccination?
 
 
 *We agree that this should be included in the methods section. We have amended the explanation of BCG vaccination status to the following:*
 
-*"BCG status was collected during the assessment of TB cases and then entered in the ETS. When available BCG vaccination records are used, although often these are not available and so patient recall, or the presence of a scare is relied on. When cases are uncertain, and there is no evidence of a scar, no BCG status is given. Year of vaccination was collected similarly."*
+*"BCG status was collected and recorded in ETS by case managers. Information on BCG vaccination status may have come from vaccination records, patient recall or the presence of a scar. When cases are uncertain, and there is no evidence of a scar, no BCG status is given. Year of vaccination was collected similarly."*
 
 *We acknowledge that this is a limitation of our study for which ideally a validation study would be carried out. To highlight this, we included the following in the discussion (amended to include year of vaccination).* 
 
@@ -98,7 +98,7 @@ There is no information included as to how information about BCG vaccination was
 
 For the multiple imputation procedure, which variables were imputed? Was BCG vaccination status imputed for this model when missing?
 
-*We updated the methods section to highlight that all outcome and explanatory variables were included in the multple imputation approach:*
+*We updated the methods section to highlight that all outcome and explanatory variables were included in the multiple imputation approach:*
   
 *"To mitigate the impact of missing data we used multiple imputation, with the MICE package.[27] We imputed 50 data sets (for 20 iterations) using all outcome and explanatory variables included in the analysis as predictors along with Public Health England centre. The model results were pooled using the small sample method,[28] and effect sizes compared with those from the main analysis."*
 
@@ -106,19 +106,21 @@ I would consider discussing the outcome variables in the text rather than listin
 
 *We have moved the outcome variable definitions from a table into the main text of the manuscript. Including the modifications from comments 1., 2., and 3. above this now reads as follows:*
 
-*"The outcomes we considered were: all-cause mortality, death due to TB (in those who died), recurrent TB, pulmonary disease, and sputum smear status. These outcomes were selected based on: their availability in the ETS; evidence from the literature of prior associations with BCG vaccination; associations with increased case infectiousness; or severe outcomes for patients."*"
+*"The outcomes we considered were: all-cause mortality, death due to TB (in those who died), recurrent TB, pulmonary disease, and sputum smear status. These outcomes were selected based on: their availability in the ETS; evidence from the literature of prior associations with BCG vaccination; associations with increased case infectiousness; or severe outcomes for patients."*
 
-*"All-cause mortality was defined using the overall outcome recorded in ETS, this is based on 36 months of folow up starting from date of starting treatment. Where the treatment start date was not available the notification date was used if appropriate. The date of death was validated against Office for National Statistics (ONS) data. Those that were lost to follow up, or not evaluated were treated as missing. In cases with a known cause of death, death due to TB was defined as those that died from TB, or where TB had contributed to their death. This was assessed using the cases death certificates. TB cases who had recurrent episodes were identified in the dataset using their NHS number. Positive sputum smear status was given to cases that had a sputum sample shown to contain Acid-Fast Bacilli. A positive sputum smear status indicates that cases are more likely to be infectious. Cases were defined as having pulmonary TB if a positive sputum smear sample was recorded or if a positive culture was grown from a pulmonary laboratory specimen. People with laryngeal TB were defined as having pulmonary TB, and people with miliary TB were not excluded."*
+
+*"All-cause mortality was defined using the overall outcome recorded in ETS, this is based on up to 36 months of follow up starting from date of starting treatment. Follow up ends when a case is recorded as completing treatment, with treatment status evaluated at 12, 24, and 36 months from starting treatment. Where the treatment start date was not available the notification date was used if appropriate. The date of death was validated against Office for National Statistics (ONS) data. Those that were lost to follow up, or not evaluated were treated as missing. In cases with a known cause of death, death due to TB was defined as those that died from TB, or where TB had contributed to their death. Cause of death was recorded by case managers. TB cases who had recurrent episodes were identified using probabilistic matching. Positive sputum smear status was given to cases that had a sputum sample shown to contain Acid-Fast Bacilli. A positive sputum smear status indicates that cases are more likely to be infectious. Cases were defined as having pulmonary TB if a positive sputum smear sample was recorded, if a positive culture was grown from a pulmonary laboratory specimen, or if they were clinically assessed as having pulmonary TB."*
+
 
 ### Results 
 
 This manuscript contains a large number of tables and many of them seem to be redundant. I would suggest combining some of the tables so more information can be included in the main manuscript rather than the supplement. For example, Tables S1 and S2 contain information that would normally be a part of "Table 1". I would consider combining these tables to make a new Table 1 so readers can more clearly see how outcomes and covariates differed based on BCG vaccine status.
 
-*We have moved both S1 and S2 into the main body of the text. The tables are presented seperately to make it clear that not all outcomes were considered in the same model. Whilst this is our prefered method of presenting this data we would be happy to combine these tables into a single table if required.*
+*We have moved both S1 and S2 into the main body of the text. The tables are presented separately to make it clear that not all outcomes were considered in the same model. Whilst this is our preferred method of presenting this data we would be happy to combine these tables into a single table if required.*
 
 I suggest including the total n used for each analysis in all tables.
 
-*We have included both the univariate and multivariate sample size for all analyses that use complete case analysis. These can be found at the bottom of each table as a footnote. For analyses that use mutltiple imputation, all samples with a given outcome were used. For BCG vaccination this is all samples. For age at vaccination and years at vaccination the sample size varied between multiply imputed datasets as the proportion of the population with imputed BCG vaccination changed - this means we cannot give a definite sample size for these analyses. For the sensitivity analysis the sample size was presented in the table caption. This has been highlighted by using n = prior to the sample size.*
+*We have included both the univariate and multivariate sample size for all analyses that use complete case analysis. These can be found at the bottom of each table as a footnote. For analyses that use multiple imputation, all samples with a given outcome were used. For BCG vaccination this is all samples. For age at vaccination and years at vaccination the sample size varied between multiply imputed datasets as the proportion of the population with imputed BCG vaccination changed - this means we cannot give a definite sample size for these analyses. For the sensitivity analysis the sample size was presented in the table caption. This has been highlighted by using n = prior to the sample size.*
 
 In supplemental table S9, the post-hoc power calculation is not necessary. This is simply re-stating the primary analysis. By definition those analyses that did not reach statistical significance were not adequately powered to detect statistical significance given the observed effect size.
 
@@ -153,9 +155,9 @@ There is renewed interest in BCG vaccination. For example, recently published da
 
 2.	I am a bit baffled by examining the duration of effect data according to a discrete variable: more or less than 10 year since vaccination… why was age since vaccination not used as a continuous variable in analysis?
 
-*We initially considered using a continuous varibale but ultimately decided to use a binary categorical variable for years since vaccination. This was primarily motivated by concerns over the linearity of any relationship between TB outcomes and years since vaccination. Whilst BCG effectiveness appears to decrease in the first 10-15 years after vaccination with a near linear relationship it is unknown whether this continues beyond 15 years. The use of a linear relationship in this scenario may have led to a reduction in the effect size. 10 years was chosen as a breakpoint as this is a conservative estimate of when BCG effectiveness has reduced to near parity with no vaccination. We hypothesised that any protection from negative outcomes would also decrease over the same timescale. We were also concerned the recall bias of year of vaccination would increase with years since vaccination, categorising reduces the impact of this bias. We have now highlighted this in the manuscript with the following statement in the methods secton: *
+*We initially considered using a continuous variable but ultimately decided to use a binary categorical variable for years since vaccination. This was primarily motivated by concerns over the linearity of any relationship between TB outcomes and years since vaccination. Whilst BCG effectiveness appears to decrease in the first 10-15 years after vaccination with a near linear relationship it is unknown whether this continues beyond 15 years. The use of a linear relationship in this scenario may have led to a reduction in the effect size. 10 years was chosen as a breakpoint as this is a conservative estimate of when BCG effectiveness has reduced to near parity with no vaccination. We hypothesised that any protection from negative outcomes would also decrease over the same timescale. We were also concerned the recall bias of year of vaccination would increase with years since vaccination, categorising reduces the impact of this bias. We have now highlighted this in the manuscript with the following statement in the methods section: *
 
-*"Years since BCG vaccination was defined as year of notification minus year of vaccination and categorised into two groups (0 to 10 and 11+ years). This was based on: evidence that the average duration of BCG protection is 10-15 years;[15] increasing recall bias with time since vaccination, and any association between years since vaccination and TB outcomes may be non-linear."*
+*"Years since BCG vaccination was defined as year of notification minus year of vaccination and categorised into two groups (0 to 10 and 11+ years). This was based on: evidence that the average duration of BCG protection is at least 10-15 years;[15] increasing recall bias with time since vaccination, and any association between years since vaccination and TB outcomes may be non-linear."*
 
 *To highlight that understanding the functional form for the decay of the effectiveness of the BCG vaccine at preventing negative outcomes we have amended future work section of the discussion as follows:*
 
@@ -163,7 +165,7 @@ There is renewed interest in BCG vaccination. For example, recently published da
 
 3. The outcome measures used for this study appear randomly chosen - there could be many additional outcomes of TB disease. Such as extent of pulmonary disease on chest roentgenograms. 
 
-*We agree that there could be additional outcome variables included in this study. However, we could only include outcomes that were included in the routine surveliance dataset on which this study was based. Given the availability of outcome data, we selected outcomes for further evaluation based on  evidence from the literature of prior associations with BCG vaccination, associations with TB infectiousness, or poor consequences for patients. We have now highlighted this in the manuscript with the following statement in the methods section: *
+*We agree that there could be additional outcome variables included in this study. However, we could only include outcomes that were included in the routine surveillance dataset on which this study was based. Given the availability of outcome data, we selected outcomes for further evaluation based on  evidence from the literature of prior associations with BCG vaccination, associations with TB infectiousness, or poor consequences for patients. We have now highlighted this in the manuscript with the following statement in the methods section: *
 
 *"The outcomes we considered were: all-cause mortality, death due to TB (in those who died), recurrent TB, pulmonary disease, and sputum smear status. These outcomes were selected based on: their availability in the ETS; evidence from the literature of prior associations with BCG vaccination; associations with increased case infectiousness; or severe outcomes for patients"*
 
