@@ -3,7 +3,8 @@ FROM rocker/tidyverse:3.5.0
 
 MAINTAINER "Sam Abbott" contact@samabbott.co.uk
 
-RUN apt-get install -y \
+RUN apt-get update -y \
+    apt-get install -y \
     texlive-latex-recommended \
     texlive-fonts-extra \
     texinfo \

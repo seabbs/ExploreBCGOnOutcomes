@@ -10,7 +10,7 @@ output:
 
 Dear Dr. Orenstein,
 
-Thank you for sending review reports for our manuscript. The reviewer’s comments were useful, and have improved the paper.
+Thank you for sending review reports for our manuscript. The reviewer’s comments were useful and have improved the paper.
 
 We enclose a revised version of the manuscript (clean and with tracked changes), which addresses the reviewer’s comments and suggestions. The reviewer’s comments are shown below with our response to each comment in italics.
 
@@ -116,7 +116,7 @@ I would consider discussing the outcome variables in the text rather than listin
 
 This manuscript contains a large number of tables and many of them seem to be redundant. I would suggest combining some of the tables so more information can be included in the main manuscript rather than the supplement. For example, Tables S1 and S2 contain information that would normally be a part of "Table 1". I would consider combining these tables to make a new Table 1 so readers can more clearly see how outcomes and covariates differed based on BCG vaccine status.
 
-*We have moved both S1 and S2 into the main body of the text. The tables are presented separately to make it clear that not all outcomes were considered in the same model. Whilst this is our preferred method of presenting this data we would be happy to combine these tables into a single table if required.*
+*We have moved both S1 and S2 into the main body of the text. The tables are presented separately to make it clear that not all outcomes were considered in the same model. Whilst this is our preferred method of presenting this data, we would be happy to combine these tables into a single table if required.*
 
 I suggest including the total n used for each analysis in all tables.
 
