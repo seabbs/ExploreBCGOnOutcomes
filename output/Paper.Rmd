@@ -715,6 +715,8 @@ if (folder == 'main' && file.exists('../data/drop_recurrent/regression_analysis.
   #Append results
   bcg_ass_main <- map2_df(append_results, names(append_results), read_rename_BCG_ass) %>% bind_rows
 
+  saveRDS(bcg_ass_main, file.path('../data', folder, "sensitivity_analysis.rds"))
+  
   ## Make table
   bcg_ass_main %>% 
       pretty_sum_results_table(footer = paste0('OR: odds ratio with 95% confidence intervals, aOR: adjusted odds ratio with 95% confidence intervals, * ', tb_death_footer), 

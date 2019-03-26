@@ -17,8 +17,8 @@ pkgLoad <- function(x)
 
 ## Set up checkpoint versioning
 pkgLoad("checkpoint")
-if (!dir.exists("./.checkpoint")) { dir.create("./.checkpoint")}
-checkpoint("2018-06-19", scanForPackages = TRUE, checkpointLocation = "./.checkpoint")
+if (!dir.exists("../.checkpoint")) { dir.create("../.checkpoint")}
+checkpoint("2018-06-19", scanForPackages = TRUE, checkpointLocation = "../.checkpoint")
 
 ## Install/Load all other packages
 pck <- lapply(package_names, pkgLoad)
