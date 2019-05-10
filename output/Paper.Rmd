@@ -472,9 +472,11 @@ names(categories) <- 'bcgvacc'
 demo_sum <- bind_cols(demographic_summary(var, var_words, uk_not), variable_summary(categories, var, var_words, uk_not))
 }) -> demo_sum_bcg
 
+demo_sum_bcg$`Demographic Characteristics` <- stringr::str_replace(demo_sum_bcg$`Demographic Characteristics`, "deprived\\)", "deprived\\)\\*")
+
 demo_sum_bcg %>% 
               pretty_sum_results_table(col_names = c("Confounder", colnames(demo_sum_bcg)[-1]),
-                                       footer = paste0('{% all cases}(% complete within vaccine status)[% *complete within category*], * ',  tb_death_footer), 
+                                       footer = paste0('{% all cases}(% complete within vaccine status)[% *complete within category*], * ', "Index of Multiple Deprivation (2010) categorised into five groups for England"), 
                                        label = 'ConfounderStrat', 
                                        caption = 'Confounders for individuals in England notified with tuberculosis between 2009-2015,  stratified by BCG vaccination status.',
                                        cap_fun = tabRef)
@@ -507,7 +509,7 @@ table_var_outs[[1]] %>%
             pretty_sum_results_table(col_names = c('Outcome', 'BCG vaccinated', 'Cases*', 'Cases with outcome (%)', 'OR (95% CI)', 'P-value', 'Cases\u2020', 'Cases with outcome (%)', 'aOR (95% CI)', 'P-value'), 
                                      footer = paste0('OR (95% CI): unadjusted odds ratio with 95% confidence intervals, aOR (95% CI): adjusted odds ratios with 95% confidence intervals, ', sum_sample_size('BCG', VarAdj = 'BCGAdj'), ", \u2021 ", tb_death_footer), 
                                      label = 'BCGoutsum', 
-                                     caption = 'Summary of associations between BCG vaccination and all outcomes')
+                                     caption = 'Summary of associations between BCG vaccination and all outcomes. Cases represents all notifications with complete data and a given BCG status, regardless of outcome. Cases with outcome is similarly defined but includes only cases with the specified outcome.')
 ```
 
 
@@ -525,7 +527,7 @@ table_var_outs[[2]] %>%
                                      footer = paste0('OR (95% CI): unadjusted odds ratio with 95% confidence intervals, aOR (95% CI): adjusted odds ratios with 95% confidence intervals, ', sum_sample_size('YearOfVac', VarAdj = 'YearOfVacAdj', PerDescrip = '% of vaccinated cases'),
                                                      ", \u2021 ", tb_death_footer), 
                                      label = 'YrsinceBCGoutsum', 
-                                     caption = 'Summary of associations between years since vaccination and all outcomes in individuals who were vaccinated. The baseline exposure is vaccination $\u2264 10$ years before diagnosis compared to vaccination $11+$ years before diagnosis. Deaths due to TB (in those who died) had insufficient data for effect sizes to be estimated in both the univariable and multivariable analysis.'
+                                     caption = 'Summary of associations between years since vaccination and all outcomes in individuals who were vaccinated. The baseline exposure is vaccination $\u2264 10$ years before diagnosis compared to vaccination $11+$ years before diagnosis. Deaths due to TB (in those who died) had insufficient data for effect sizes to be estimated in both the univariable and multivariable analysis. Cases represents all notifications with complete data and a given BCG status, regardless of outcome. Cases with outcome is similarly defined but includes only cases with the specified outcome.'
                                      )
 ``` 
 
@@ -564,7 +566,7 @@ Little work has been done to assess the overall effect of BCG on outcomes for ac
 
 We found that BCG vaccination was associated with reduced all-cause mortality, with some weaker evidence of an association with reduced recurrent TB. A plausible mechanism for this association is that BCG vaccination improves treatment outcomes,[@Jeremiah2010] which then results in decreased mortality, and reduced recurrent TB. However, these effects may also be independent and for all-cause mortality may not be directly related to active TB. In this case, a possible mechanism for the association between BCG vaccination and all-cause mortality is that BCG vaccination modulates the innate immune response, resulting in non-specific protection.[@Kleinnijenhuis2012] For low incidence countries, where the reduction in TB cases has been used as evidence to scale back vaccination programs,[@Zwerling2011] these results suggest that BCG vaccination may be more beneficial than previously thought. In countries that target vaccination at those considered to be at high risk of TB the results from this study could be used to help drive uptake by providing additional incentives for vaccination. The evidence we have presented should be considered in future cost-effectiveness studies of BCG vaccination programs.
 
-Further work is required to determine whether years since vaccination and age at vaccination are associated with TB outcomes as this study was limited by low sample size, missing data for year of vaccination, and the relative rarity of some TB outcomes. However, due to the continuous collection of the surveillance data used in this analysis, this study could be repeated once additional data have been collected. If this study were to be repeated with a larger sample size particular attention should be given to the functional form of any decay in protection from negative TB outcomes. Additionally, a larger sample size would allow investigation of the associations identified between TB outcomes and BCG vaccination stratified by pulmonary, extrapulmonary, and disseminated TB disease. The results from this study require validation in independent datasets and the analysis should be reproducible in other low incidence countries that have similarly developed surveillance systems. If validated in low incidence countries, similar studies in medium to high incidence countries should be conducted because any effect would have a greater impact in these settings.
+Further work is required to determine whether years since vaccination and age at vaccination are associated with TB outcomes as this study was limited by low sample size, missing data for year of vaccination, and the relative rarity of some TB outcomes. However, due to the continuous collection of the surveillance data used in this analysis, this study could be repeated once additional data have been collected. If this study were to be repeated with a larger sample size particular attention should be given to the functional form of any decay in protection from negative TB outcomes. Additionally, a larger sample size would allow investigation of the associations identified between TB outcomes and BCG vaccination stratified by pulmonary, extrapulmonary, and disseminated TB disease. Between country variations in the strength of associations could also be explored as a proxy to BCG strain using sub-group analysis. The results from this study require validation in independent datasets and the analysis should be reproducible in other low incidence countries that have similarly developed surveillance systems. If validated in low incidence countries, similar studies in medium to high incidence countries should be conducted because any effect would have a greater impact in these settings.
 
 **Acknowledgements**
 
@@ -635,7 +637,7 @@ table_var_outs[[3]] %>%
                                      footer = paste0('OR (95% CI): unadjusted odds ratio with 95% confidence intervals, aOR (95% CI): adjusted odds ratios with 95% confidence intervals, ', sum_sample_size('AgeAtVac', VarAdj = 'AgeAtVacAdj', PerDescrip = '% of vaccinated cases'),
                                                      " \u2021 ",  tb_death_footer), 
                                      label = 'ageatvacoutsum', 
-                                     caption = 'Summary of associations between age at vaccination and all outcomes in individuals who were vaccinated - the baseline exposure is vaccination at birth compared to vaccination from 1 to < 12, 12 to < 16, and 16+ years of age.',
+                                     caption = 'Summary of associations between age at vaccination and all outcomes in individuals who were vaccinated - the baseline exposure is vaccination at birth compared to vaccination from 1 to < 12, 12 to < 16, and 16+ years of age. Cases represents all notifications with complete data and a given BCG status, regardless of outcome. Cases with outcome is similarly defined but includes only cases with the specified outcome.',
                                      cap_fun = SuptabRef
                                      )
 
