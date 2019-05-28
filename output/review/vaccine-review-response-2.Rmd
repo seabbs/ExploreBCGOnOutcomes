@@ -1,8 +1,8 @@
 ---
 title: "Reviewer Response"
 output:
-  word_document: default
   pdf_document: default
+  word_document: default
   html_document:
     df_print: paged
 ---
@@ -10,9 +10,13 @@ output:
 
 Dear Dr. Orenstein,
 
-Thank you for sending review reports for our manuscript. The reviewer’s comments were again useful and have improved the paper.
+Thank you for sending review reports for our manuscript. 
 
-We enclose a revised version of the manuscript (clean and with tracked changes), which addresses the reviewer’s comments and suggestions. The reviewer’s comments are shown below with our response to each comment in italics.
+We have revised the paper in light of the reviewers’ comments. In particular, we have revised the tables for clarity, and improved their captioning.
+
+We enclose a revised version of the manuscript (clean and with tracked changes), which addresses the reviewers' comments and suggestions. The reviewers' comments are shown below with our response to each comment in italics.
+
+We hope that the manuscript is now suitable for publication in Vaccine.  
 
 Yours sincerely,
 
@@ -50,10 +54,12 @@ I have some issues that were not addressed in the original reviews:
 
 *"Cases represents all notifications with complete data and a given BCG status, regardless of outcome. Cases with outcome is similarly defined but includes only cases with the specified outcome."*
 
-*Whilst we agree that the use of "{% all cases}(% complete within vaccine status)[complete within category]" makes the table more complex to interpret we feel that this structure allows us to more clearly detail the missing data present. This is an important consideration as the volume of missing data is important to understand when interpreting the study findings.*
+*We have also clarified the definition of sputum spear status in Table 1 and UK birth status in Table 2.*
+
+*We agree that the use of the {% all cases}(% complete within vaccine status)[complete within category] structure in Table 1 and Table 2 adds complexity but feel that this is justified as missing data is an important consideration for this study. We would welcome suggestions for improvements.*
 
 3. In Table 2, please explain to what "IMD rank" refers. This should be presented as part of the table.
 
-*We agree that this was missing from the table. We have added the following definition to the table footer:*
+*Thank you. We have added the following definition to the table footer:*
 
 *"Index of Multiple Deprivation (2010) categorised into five groups for England"*

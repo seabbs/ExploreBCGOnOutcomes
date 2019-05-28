@@ -449,6 +449,8 @@ names(categories) <- 'bcgvacc'
   outcome_sum <- bind_cols(demographic_summary(var, var_words, uk_not), variable_summary(categories, var, var_words, uk_not))
 }) -> outcome_sum
 
+outcome_sum$`Demographic Characteristics` <- stringr::str_replace(outcome_sum$`Demographic Characteristics`, " - positive", "")
+
 ## Pretty results table
 outcome_sum %>% 
     pretty_sum_results_table(col_names = c("Outcome", colnames(outcome_sum)[-1]),
@@ -473,6 +475,7 @@ demo_sum <- bind_cols(demographic_summary(var, var_words, uk_not), variable_summ
 }) -> demo_sum_bcg
 
 demo_sum_bcg$`Demographic Characteristics` <- stringr::str_replace(demo_sum_bcg$`Demographic Characteristics`, "deprived\\)", "deprived\\)\\*")
+demo_sum_bcg$`Demographic Characteristics` <- stringr::str_replace(demo_sum_bcg$`Demographic Characteristics`, "UK born", "UK birth status")
 
 demo_sum_bcg %>% 
               pretty_sum_results_table(col_names = c("Confounder", colnames(demo_sum_bcg)[-1]),
