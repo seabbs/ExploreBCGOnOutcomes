@@ -14,7 +14,7 @@ knitr::opts_chunk$set(
 
 
 [![badge](https://img.shields.io/badge/Launch-Analysis-lightblue.svg)](https://mybinder.org/v2/gh/seabbs/ExploreBCGOnOutcomes/master?urlpath=rstudio)
-[![Paper](https://img.shields.io/badge/Paper-10.1101/366476-lightgrey.svg)](https://doi.org/10.1101/366476)
+[![Preprint](https://img.shields.io/badge/Preprint-10.1101/366476-lightgrey.svg)](https://doi.org/10.1101/366476)
 [![DOI](https://zenodo.org/badge/127124135.svg)](https://zenodo.org/badge/latestdoi/127124135)
 
 ## Abstract
